@@ -1,0 +1,11 @@
+<mat-nav-list>
+  @for (nav of fillerNav; track nav) {
+  <a mat-list-item [routerLink]="['/', nav.key]">
+    <div class="flex flex-row gap-x-4">
+      <mat-icon aria-hidden="false" aria-label="Example home icon" [fontIcon]="nav?.icon!" color='primary'>
+      </mat-icon>
+      <span>{{nav?.value}}</span>
+    </div>
+  </a>
+  }
+</mat-nav-list>

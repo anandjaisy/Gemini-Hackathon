@@ -1,0 +1,11 @@
+@use "../../theme_variable.scss" as theme-vars;
+
+.footer-background {
+  &.light-theme {
+    background-color: theme-vars.$light-primary;
+  }
+
+  &.dark-theme {
+    background-color: theme-vars.$dark-primary;
+  }
+}
