@@ -1,0 +1,50 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: ft-common
+  namespace: fetebird-common
+spec:
+  description: >-
+    Clone a git repository. This example pipeline demonstrates the following:
+    How to use the git-clone catalog Task
+  params:
+    - name: REPO_URL
+      type: string
+      description: The git repository URL to clone from.
+    - name : GRADLE_IMAGE
+      type: string
+      description: Dockcer image for gradle.
+
+  workspaces:
+    - name: shared-data
+      description: |
+        This workspace will receive the cloned git repo and be passed
+        to the next Task for the repo's README.md file to be read.
+  tasks:
+    - name: git-clone
+      taskRef:
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: shared-data
+      params:
+        - name: url
+          value: "$(params.REPO_URL)"
+        - name: deleteExisting
+          value: "true"
+    - name: gradle-clean-build-publish
+      taskRef:
+        name: gradle
+      runAfter: ["git-clone"]  # Wait until the clone is done before building the java project.
+      workspaces:
+        - name: source
+          workspace: shared-data
+      params:
+        - name: TASKS
+          value:
+            - clean
+            - build
+            - test
+            - publish
+        - name: GRADLE_IMAGE
+          value: "$(params.GRADLE_IMAGE)"
