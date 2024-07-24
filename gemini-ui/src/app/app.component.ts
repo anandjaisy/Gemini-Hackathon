@@ -1,16 +1,16 @@
 import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FooterComponent } from './footer/footer.component';
-import { ToolbarComponent } from './toolbar/toolbar.component';
+import { ToolbarComponent } from './common/toolbar/toolbar.component';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { CommonModule } from '@angular/common';
-import { ToolbarMenuComponent } from './toolbar/toolbar-menu/toolbar-menu.component';
+import { ToolbarMenuComponent } from './common/toolbar/toolbar-menu/toolbar-menu.component';
 import { MatDividerModule } from '@angular/material/divider';
-import {style} from "@angular/animations";
+import { style } from '@angular/animations';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -26,11 +26,11 @@ import {style} from "@angular/animations";
     MatIconModule,
     MatSidenavModule,
     MatDividerModule,
-    FooterComponent
+    FooterComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  host: {'[style.--mat-sidenav-container-shape]': '"0px"'}
+  host: { '[style.--mat-sidenav-container-shape]': '"0px"' },
 })
 export class AppComponent {
   title = 'Fetebird Ai';
