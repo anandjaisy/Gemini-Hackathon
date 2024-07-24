@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router } from '@angular/router';
-import {AppSettingService, AuthService, FalconCoreModule, LoggerService} from "@falcon-ng/tailwind";
+import {Router } from '@angular/router';
+import {AppSettingService, AuthService, FalconTailwindModule, LoggerService} from "@falcon-ng/tailwind";
+import  {FalconCoreModule} from "@falcon-ng/core";
 
 @Component({
   selector: 'app-auth-callback',
   standalone: true,
-  imports: [FalconCoreModule],
+  imports: [FalconCoreModule, FalconTailwindModule],
   templateUrl: './auth-callback.component.html',
   styleUrl: './auth-callback.component.scss'
 })

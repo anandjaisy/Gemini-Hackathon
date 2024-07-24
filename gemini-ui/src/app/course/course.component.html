@@ -1,1 +1,10 @@
-<p>course works!</p>
+<div class="mx-12 my-12">
+  <div class="flex justify-end mb-7">
+    <fal-button label="Add course" type="submit" />
+  </div>
+  <fal-card>
+    <falcon-table [matTableConfig]="matTableConfig" [displayedColumns]="displayedColumns"
+      (tableActionRowEvent)="tableActionRowEvent($event)"></falcon-table>
+  </fal-card>
+
+</div>

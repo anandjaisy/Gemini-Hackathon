@@ -1,0 +1,22 @@
+apiVersion: tekton.dev/v1
+kind: PipelineRun
+metadata:
+  name: fetebird-gemini-hackathon
+  namespace: fetebird-gemini-hackathon  
+spec:
+  pipelineRef:
+    name: fetebird-gemini-hackathon
+  taskRunTemplate:
+    podTemplate:
+      securityContext:
+        fsGroup: 65532
+  workspaces:
+    - name: shared-data
+      persistentVolumeClaim:
+        claimName: fetebird-gemini-hackathon-pvc
+  params:
+    - name: REPO_URL
+      value: git@github.com:anandjaisy/Gemini-Hackathon.git
+  taskRunSpecs:
+    - pipelineTaskName: git-clone
+      serviceAccountName: git-service-account

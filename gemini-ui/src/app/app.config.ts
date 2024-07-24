@@ -4,7 +4,8 @@ import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {provideAnimations} from "@angular/platform-browser/animations";
-import {FalconCoreModule} from "@falcon-ng/tailwind";
+import {FalconTailwindModule} from "@falcon-ng/tailwind";
+import {FalconCoreModule} from "@falcon-ng/core";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -12,6 +13,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideAnimations(),
     provideAnimationsAsync(),
-    importProvidersFrom(FalconCoreModule.forRoot(environment))
+    importProvidersFrom(FalconCoreModule),
+    importProvidersFrom(FalconTailwindModule.forRoot(environment)),
   ]
 };
