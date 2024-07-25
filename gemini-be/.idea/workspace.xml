@@ -5,12 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ae550208-eea8-4b94-b063-76f0241fe683" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../deployment/tekton/pipeline/pipeline-run.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../deployment/tekton/pipeline/pipeline.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../deployment/tekton/secret/git-secret.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../deployment/tekton/service-account/git-service-account.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../deployment/tekton/setup.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../deployment/tekton/setup.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../deployment/tekton/storage/persistance-volume-claim.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gemini-ui/src/app/app.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../gemini-ui/src/app/app.routes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gemini-ui/src/app/common/toolbar/toolbar-menu/toolbar-menu.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../gemini-ui/src/app/common/toolbar/toolbar-menu/toolbar-menu.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gemini-ui/src/app/common/toolbar/toolbar.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../gemini-ui/src/app/common/toolbar/toolbar.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gemini-ui/src/app/common/toolbar/toolbar.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../gemini-ui/src/app/common/toolbar/toolbar.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gemini-ui/src/app/course/course.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../gemini-ui/src/app/course/course.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gemini-ui/src/app/course/course.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../gemini-ui/src/app/course/course.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gemini-ui/src/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../gemini-ui/src/styles.scss" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -171,7 +172,7 @@
     "Micronaut.AssessmentFunction.executor": "Run",
     "Micronaut.AssignmentApi.executor": "Run",
     "Micronaut.CourseApi.executor": "Run",
-    "Micronaut.CourseFunction.executor": "Run",
+    "Micronaut.CourseFunction.executor": "Debug",
     "Micronaut.GeminiHackathonApi.executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
@@ -447,7 +448,8 @@
       <workItem from="1719832101823" duration="472000" />
       <workItem from="1720671954564" duration="98000" />
       <workItem from="1721705043775" duration="1073000" />
-      <workItem from="1721706123338" duration="3531000" />
+      <workItem from="1721706123338" duration="6430000" />
+      <workItem from="1721802615029" duration="6462000" />
     </task>
     <servers />
   </component>
@@ -544,11 +546,6 @@
           <url>file://$PROJECT_DIR$/assessment-function/src/main/java/fete/bird/feature/studentAssessment/StudentAssessmentController.java</url>
           <line>40</line>
           <option name="timeStamp" value="55" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/apigateway/src/main/java/fete/bird/apigateway/config/SwaggerConfig.java</url>
-          <line>35</line>
-          <option name="timeStamp" value="57" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

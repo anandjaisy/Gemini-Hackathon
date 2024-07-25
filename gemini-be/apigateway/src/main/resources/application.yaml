@@ -9,6 +9,11 @@ spring:
             ${COURSE_SERVICE_URL:http://localhost:8081}
           predicates:
             - Path=/course/**, /swagger/**
+          metadata:
+            cors:
+              allowedOrigins: '*'
+              allowedHeaders: '*'
+              allowedMethods: '*'
         - id: assessment-service
           uri:
             ${ASSESSMENT_SERVICE_URL:http://localhost:8082}

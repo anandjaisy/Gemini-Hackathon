@@ -6,6 +6,9 @@
 :root {
   @include mat.all-component-themes($Gemini-ui-light-theme);
 }
+body {
+  margin: auto;
+}
 
 @tailwind base;
 @tailwind components;

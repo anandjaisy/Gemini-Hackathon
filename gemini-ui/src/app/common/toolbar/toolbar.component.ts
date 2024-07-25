@@ -23,6 +23,7 @@ import { FalconTailwindModule } from '@falcon-ng/tailwind';
   styleUrl: './toolbar.component.scss',
 })
 export class ToolbarComponent {
+  isHomeRoute: boolean = false;
   signInButtonConfig = new Button({
     label: 'Sign in',
     appearance: Appearance.Raised,
