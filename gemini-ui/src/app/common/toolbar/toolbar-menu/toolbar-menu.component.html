@@ -1,11 +1,22 @@
-<mat-nav-list>
-  @for (nav of fillerNav; track nav) {
-  <a mat-list-item [routerLink]="['/', nav.key]">
-    <div class="flex flex-row gap-x-4">
-      <mat-icon aria-hidden="false" aria-label="Example home icon" [fontIcon]="nav?.icon!" color='primary'>
-      </mat-icon>
-      <span class="font-thin">{{nav?.value}}</span>
-    </div>
-  </a>
-  }
-</mat-nav-list>
+<div class="mx-3">
+  <mat-nav-list>
+    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+      <!-- This is the tree node template for leaf nodes -->
+      <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+        <a mat-list-item matTreeNodeToggle [routerLink]="['/', node.link]"><span
+            class="font-thin">{{node.name}}</span></a>
+      </mat-tree-node>
+      <!-- This is the tree node template for expandable nodes -->
+      <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+        <a mat-list-item matTreeNodeToggle [routerLink]="['/', node.link]">
+          <div class="flex gap-2">
+            <mat-icon>
+              {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+            <span class="font-thin">{{node.name}}</span>
+          </div>
+        </a>
+      </mat-tree-node>
+    </mat-tree>
+  </mat-nav-list>
+</div>

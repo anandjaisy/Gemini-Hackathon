@@ -166,7 +166,7 @@ public class CourseTest extends BaseFixture {
         var getRequest = HttpRequest.GET(String.format("%s/%s","/course", lastCreatedCountryId));
         var getResponse = httpClient.toBlocking().exchange(getRequest,CourseResponse.class);
         CourseResponse getbody = getResponse.body();
-        assertEquals(getbody.title(), patchResponse.body().title());
+        assertEquals(getbody.name(), patchResponse.body().name());
     }
 
     @Test
@@ -185,7 +185,7 @@ public class CourseTest extends BaseFixture {
         var deleteResponse = httpClient.toBlocking().exchange(deleteRequest);
 
         // Then
-        assertEquals(deleteResponse.getStatus(), HttpStatus.OK);
+        assertEquals(deleteResponse.getStatus(), HttpStatus.NO_CONTENT);
 
     }
 

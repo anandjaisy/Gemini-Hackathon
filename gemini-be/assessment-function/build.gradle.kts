@@ -20,6 +20,7 @@ dependencies {
     implementation("io.micronaut.eclipsestore:micronaut-eclipsestore")
     implementation("io.micronaut.eclipsestore:micronaut-eclipsestore-annotations")
     implementation("io.micronaut.serde:micronaut-serde-jackson")
+    implementation("io.micronaut.grpc:micronaut-grpc-client-runtime")
 
     compileOnly("io.micronaut:micronaut-http-client")
     compileOnly("io.micronaut.openapi:micronaut-openapi-annotations")

@@ -10,8 +10,7 @@ public record AssessmentResponseMapper() implements Function<Assessment, Assessm
     public AssessmentResponse apply(Assessment assessment) {
         return new AssessmentResponse(assessment.id(),
                 assessment.name(),
-                assessment.description(),
-                assessment.courseId(),
+                assessment.description(),assessment.courseId(),
                 assessment.assessmentDate(),
                 assessment.assessmentDueDate());
     }

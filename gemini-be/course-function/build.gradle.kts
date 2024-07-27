@@ -2,6 +2,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("io.micronaut.application") version "4.4.0"
     id("io.micronaut.aot") version "4.4.0"
+    id("com.google.protobuf") version "0.9.2"
 }
 
 version = "0.1"
@@ -45,6 +46,7 @@ java {
     sourceCompatibility = JavaVersion.toVersion("21")
     targetCompatibility = JavaVersion.toVersion("21")
 }
+
 
 // Can MicroStream handle Records?
 //Yes, but due to reflection restrictions of records introduced in Java 15 an export has to be added to the VM parameters:

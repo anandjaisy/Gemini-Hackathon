@@ -179,7 +179,7 @@ public class QuestionTest extends BaseFixture{
         var deleteResponse = httpClient.toBlocking().exchange(deleteRequest);
 
         // Then
-        assertEquals(deleteResponse.getStatus(), HttpStatus.OK);
+        assertEquals(deleteResponse.getStatus(), HttpStatus.NO_CONTENT);
     }
 
     @Test
