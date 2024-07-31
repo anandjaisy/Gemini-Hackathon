@@ -1,0 +1,15 @@
+<mat-toolbar color="primary">
+  @if(authService.isLoggedIn()) {
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"
+    (click)="sidenav?.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  }
+  <span class="font-thin">Fetebird</span>
+  <span class="example-spacer"></span>
+  @if(!authService.isLoggedIn()) {
+  <falcon-button (btnClick)="signInClick()" [control]="signInButtonConfig" class="mt-2"></falcon-button>
+  }@else {
+  <falcon-button (btnClick)="signOutclick()" [control]="signOutButtonConfig"></falcon-button>
+  }
+</mat-toolbar>

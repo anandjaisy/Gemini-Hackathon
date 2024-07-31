@@ -3,10 +3,13 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/ai-function.main.iml" filepath="$PROJECT_DIR$/.idea/modules/ai-function.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/assessment-bff.main.iml" filepath="$PROJECT_DIR$/.idea/modules/assessment-bff.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/assessment-bff.test.iml" filepath="$PROJECT_DIR$/.idea/modules/assessment-bff.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/assignment-function.main.iml" filepath="$PROJECT_DIR$/.idea/modules/assignment-function.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/assignment-function.test.iml" filepath="$PROJECT_DIR$/.idea/modules/assignment-function.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/gemini-be.iml" filepath="$PROJECT_DIR$/.idea/gemini-be.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/http-function.main.iml" filepath="$PROJECT_DIR$/.idea/modules/http-function.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/http-function.test.iml" filepath="$PROJECT_DIR$/.idea/modules/http-function.test.iml" />
     </modules>
   </component>
 </project>

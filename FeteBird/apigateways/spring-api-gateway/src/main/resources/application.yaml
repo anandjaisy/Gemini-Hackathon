@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: apigateway
+  cloud:
+    gateway:
+      routes:
+        - id: course-service
+          uri:
+            ${COURSE_SERVICE_URL:http://localhost:8081}
+          predicates:
+            - Path=/course/**, /swagger/**
+          metadata:
+            cors:
+              allowedOrigins: '*'
+              allowedHeaders: '*'
+              allowedMethods: '*'
+        - id: assessment-service
+          uri:
+            ${ASSESSMENT_SERVICE_URL:http://localhost:8082}
+          predicates:
+            - Path=/assessment/**, /swagger/**

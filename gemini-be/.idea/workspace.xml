@@ -5,9 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ae550208-eea8-4b94-b063-76f0241fe683" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../gemini-ui/src/app/app.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../gemini-ui/src/app/app.routes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../gemini-ui/src/app/common/toolbar/toolbar-menu/toolbar-menu.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../gemini-ui/src/app/common/toolbar/toolbar-menu/toolbar-menu.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../gemini-ui/src/app/common/toolbar/toolbar-menu/toolbar-menu.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../gemini-ui/src/app/common/toolbar/toolbar-menu/toolbar-menu.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../deployment/tekton/config.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../deployment/tekton/destroy.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../deployment/tekton/pipeline/pipeline-run.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../deployment/tekton/pipeline/pipeline.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../deployment/tekton/secret/git-secret.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../deployment/tekton/service-account/git-service-account.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../deployment/tekton/setup.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../deployment/tekton/storage/persistance-volume-claim.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../deployment/tekton/task.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../gemini-ui/src/app/assessment/assessment.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../gemini-ui/src/app/assessment/assessment.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,6 +26,9 @@
       <ProjectState />
     </projectState>
     <projectState path="$PROJECT_DIR$/apigateway">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/assessment-bff">
       <ProjectState />
     </projectState>
     <projectState path="$PROJECT_DIR$/assessment-function">
@@ -48,29 +58,7 @@
         </task>
         <projects_view>
           <tree_state>
-            <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="http-function" type="f1a62948:ProjectNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="http-function" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="http-function" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="build" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="http-function" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="other" type="c8890929:TasksNode$1" />
-              </path>
-            </expand>
+            <expand />
             <select />
           </tree_state>
         </projects_view>
@@ -81,9 +69,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
+        <option value="Class" />
         <option value="Interface" />
         <option value="Record" />
-        <option value="Class" />
       </list>
     </option>
   </component>
@@ -130,6 +118,7 @@
     &quot;Gradle.AssessmentTest.shouldUpdateTheCourseAndFetchTheUpdatedValue.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Build ai-function.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Build apigateway.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Build assessment-bff.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Build assessment-function.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Build assignment-function.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Build course-function.executor&quot;: &quot;Run&quot;,
@@ -186,6 +175,7 @@
     &quot;Gradle.course-function [generateProto].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.course-function [generateResourcesConfigFile].executor&quot;: &quot;Run&quot;,
     &quot;Micronaut.Application.executor&quot;: &quot;Run&quot;,
+    &quot;Micronaut.AssessmentBffFunction.executor&quot;: &quot;Debug&quot;,
     &quot;Micronaut.AssessmentFunction.executor&quot;: &quot;Run&quot;,
     &quot;Micronaut.AssignmentApi.executor&quot;: &quot;Run&quot;,
     &quot;Micronaut.CourseApi.executor&quot;: &quot;Run&quot;,
@@ -232,7 +222,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Gradle.AssessmentTest">
+  <component name="RunManager" selected="Gradle.Tests in 'fete.bird'">
     <configuration name="AssessmentTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -247,6 +237,30 @@
             <option value=":test" />
             <option value="--tests" />
             <option value="&quot;fete.bird.AssessmentTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="Tests in 'fete.bird'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/course-function" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;fete.bird.*&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -323,28 +337,6 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="course-function [generateResourcesConfigFile]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$/course-function" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="generateResourcesConfigFile" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
     <configuration name="AIApplication" type="MicronautRunConfigurationType" factoryName="Micronaut" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="fete.bird.AIApplication" />
       <module name="ai-function.main" />
@@ -358,12 +350,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Application" type="MicronautRunConfigurationType" factoryName="Micronaut" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="fete.bird.Application" />
-      <module name="ai-function.main" />
+    <configuration name="AssessmentBffFunction" type="MicronautRunConfigurationType" factoryName="Micronaut" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="fete.bird.AssessmentBffFunction" />
+      <module name="assessment-bff.main" />
       <option name="alternativeJrePath" />
       <option name="alternativeJrePathEnabled" value="false" />
-      <option name="mainClass" value="fete.bird.Application" />
+      <option name="mainClass" value="fete.bird.AssessmentBffFunction" />
       <option name="passParentEnvs" value="true" />
       <option name="programParameters" />
       <option name="vmParameters" />
@@ -406,12 +398,12 @@
       </method>
     </configuration>
     <list>
+      <item itemvalue="Gradle.Tests in 'fete.bird'" />
       <item itemvalue="Gradle.AssessmentTest" />
       <item itemvalue="Gradle.course-function [build]" />
       <item itemvalue="Gradle.course-function [clean]" />
       <item itemvalue="Gradle.course-function [generateProto]" />
-      <item itemvalue="Gradle.course-function [generateResourcesConfigFile]" />
-      <item itemvalue="Micronaut.Application" />
+      <item itemvalue="Micronaut.AssessmentBffFunction" />
       <item itemvalue="Micronaut.AIApplication" />
       <item itemvalue="Micronaut.AssessmentFunction" />
       <item itemvalue="Micronaut.CourseFunction" />
@@ -419,11 +411,11 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.Tests in 'fete.bird'" />
         <item itemvalue="Gradle.AssessmentTest" />
         <item itemvalue="Gradle.course-function [build]" />
         <item itemvalue="Gradle.course-function [clean]" />
         <item itemvalue="Gradle.course-function [generateProto]" />
-        <item itemvalue="Gradle.course-function [generateResourcesConfigFile]" />
       </list>
     </recent_temporary>
   </component>
@@ -471,6 +463,12 @@
       <workItem from="1721706123338" duration="6430000" />
       <workItem from="1721802615029" duration="22873000" />
       <workItem from="1722055000242" duration="821000" />
+      <workItem from="1722073120458" duration="317000" />
+      <workItem from="1722073442196" duration="2000" />
+      <workItem from="1722073478159" duration="2027000" />
+      <workItem from="1722314551307" duration="10201000" />
+      <workItem from="1722393236247" duration="38000" />
+      <workItem from="1722393674919" duration="56000" />
     </task>
     <servers />
   </component>
@@ -567,6 +565,16 @@
           <url>file://$PROJECT_DIR$/assessment-function/src/main/java/fete/bird/feature/studentAssessment/StudentAssessmentController.java</url>
           <line>40</line>
           <option name="timeStamp" value="55" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/assessment-bff/src/main/java/fete/bird/feature/assessment/AssessmentController.java</url>
+          <line>22</line>
+          <option name="timeStamp" value="57" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/assessment-bff/src/main/java/fete/bird/feature/assessment/AssessmentController.java</url>
+          <line>38</line>
+          <option name="timeStamp" value="58" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
