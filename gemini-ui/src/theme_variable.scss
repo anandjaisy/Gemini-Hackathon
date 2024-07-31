@@ -1,7 +1,0 @@
-@use "@angular/material" as mat;
-@use "sass:map";
-@use "./fetebird-theme.scss" as theme;
-
-$light-primary: mat.get-theme-color(theme.$Gemini-ui-light-theme, primary, 50);
-$dark-primary: mat.get-theme-color(theme.$Gemini-ui-dark-theme, primary, 50);
-$neutral-70: mat.get-theme-color(theme.$Gemini-ui-light-theme, neutral-variant, 70);

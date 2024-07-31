@@ -1,4 +1,0 @@
-
-
-rootProject.name="assignment-function"
-

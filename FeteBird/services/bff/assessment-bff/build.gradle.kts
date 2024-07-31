@@ -13,6 +13,9 @@ repositories {
 
 dependencies {
     annotationProcessor("io.micronaut:micronaut-http-validation")
+    annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
+
+    implementation("io.micronaut.serde:micronaut-serde-jackson")
     implementation("io.micronaut:micronaut-jackson-databind")
     compileOnly("io.micronaut:micronaut-http-client")
     runtimeOnly("ch.qos.logback:logback-classic")
@@ -32,7 +35,7 @@ java {
 graalvmNative.toolchainDetection = false
 
 micronaut {
-    runtime("google_function")
+    runtime("netty")
     testRuntime("junit5")
     processing {
         incremental(true)
