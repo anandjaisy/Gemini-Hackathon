@@ -8,24 +8,24 @@ import {
   MatTreeFlattener,
   MatTreeModule,
 } from '@angular/material/tree';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
-interface FoodNode {
+interface NavigationNode {
   name: string;
   link: string;
-  children?: FoodNode[];
+  children?: NavigationNode[];
 }
 
-const TREE_DATA: FoodNode[] = [
+const TREE_DATA: NavigationNode[] = [
   {
     name: 'Course',
     link: 'course',
-    children: [{ name: 'Enrolment', link: 'enrolment' }],
+    children: [{ name: 'Enrolment', link: 'course/enrolment' }],
   },
   {
     name: 'Assessment',
     link: 'assessment',
-    children: [{ name: 'Question', link: 'question' }],
+    children: [{ name: 'Question', link: 'assessment/question' }],
   },
 ];
 
@@ -51,7 +51,7 @@ interface ExampleFlatNode {
   styleUrl: './toolbar-menu.component.scss',
 })
 export class ToolbarMenuComponent {
-  private _transformer = (node: FoodNode, level: number) => {
+  private _transformer = (node: NavigationNode, level: number) => {
     return {
       expandable: !!node.children && node.children.length > 0,
       name: node.name,
@@ -74,9 +74,36 @@ export class ToolbarMenuComponent {
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-  constructor() {
+  constructor(public route: ActivatedRoute, router: Router) {
     this.dataSource.data = TREE_DATA;
   }
 
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
+
+  getFullLink(node: NavigationNode): string[] {
+    const fullPath = this.buildPath(node, TREE_DATA, []);
+    return fullPath;
+  }
+
+  private buildPath(
+    node: NavigationNode,
+    treeData: NavigationNode[],
+    path: string[]
+  ): string[] {
+    for (const parentNode of treeData) {
+      if (parentNode === node) {
+        return [...path, parentNode.link];
+      }
+      if (parentNode.children) {
+        const childPath = this.buildPath(node, parentNode.children, [
+          ...path,
+          parentNode.link,
+        ]);
+        if (childPath.length) {
+          return childPath;
+        }
+      }
+    }
+    return [];
+  }
 }

@@ -3,8 +3,7 @@
     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
       <!-- This is the tree node template for leaf nodes -->
       <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
-        <a mat-list-item matTreeNodeToggle [routerLink]="['/', node.link]"><span
-            class="font-thin">{{node.name}}</span></a>
+        <a mat-list-item matTreeNodeToggle [routerLink]="[node.link]"><span class="font-thin">{{node.name}}</span></a>
       </mat-tree-node>
       <!-- This is the tree node template for expandable nodes -->
       <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>

@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/assessment.test.iml" filepath="$PROJECT_DIR$/.idea/modules/assessment.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/course.main.iml" filepath="$PROJECT_DIR$/.idea/modules/course.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/course.test.iml" filepath="$PROJECT_DIR$/.idea/modules/course.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/score-ai.main.iml" filepath="$PROJECT_DIR$/.idea/modules/score-ai.main.iml" />
     </modules>
   </component>
 </project>

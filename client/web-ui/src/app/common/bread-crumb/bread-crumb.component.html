@@ -1,0 +1,28 @@
+<div class="mx-12 my-4">
+    <nav class="flex" aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+            @if (breadcrumbs.length > 0) {
+            <li class="">
+                <a routerLink="/"
+                    class="text-black inline-flex items-center text-sm font-thin hover:text-violet-800 hover:underline">
+                    <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home" class="text-base">
+                    </mat-icon>
+                </a>
+            </li>
+            }
+            @for (breadcrumb of breadcrumbs; let last = $last; track breadcrumb) {
+            <li class="inline-flex items-center" style="margin-left: 0px !important;">
+                <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="keyboard_arrow_right" />
+                @if (!last) {
+                <a [routerLink]="breadcrumb.url"
+                    class="text-black text-sm font-thin hover:text-violet-800 hover:underline">
+                    {{ breadcrumb.label | titlecase}}
+                </a>
+                }@else {
+                <span class="text-black text-sm font-thin">{{ breadcrumb.label | titlecase}}</span>
+                }
+            </li>
+            }
+        </ol>
+    </nav>
+</div>

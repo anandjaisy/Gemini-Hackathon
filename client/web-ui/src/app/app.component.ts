@@ -1,5 +1,10 @@
 import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Router,
+  RouterOutlet,
+} from '@angular/router';
 import { FooterComponent } from './footer/footer.component';
 import { ToolbarComponent } from './common/toolbar/toolbar.component';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
@@ -11,6 +16,11 @@ import { CommonModule } from '@angular/common';
 import { ToolbarMenuComponent } from './common/toolbar/toolbar-menu/toolbar-menu.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { style } from '@angular/animations';
+import { BreadcrumbService } from './common/bread-crumb/breadcrumb.service';
+import {
+  BreadCrumbComponent,
+  IBreadCrumb,
+} from './common/bread-crumb/bread-crumb.component';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -27,6 +37,7 @@ import { style } from '@angular/animations';
     MatSidenavModule,
     MatDividerModule,
     FooterComponent,
+    BreadCrumbComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -49,7 +60,12 @@ export class AppComponent {
   private _mobileQueryListener: () => void;
 
   @ViewChild('sidenav') public sidenav: MatSidenav | undefined;
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
+  constructor(
+    changeDetectorRef: ChangeDetectorRef,
+    media: MediaMatcher,
+    private router: Router,
+    private breadcrumbService: BreadcrumbService
+  ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -57,5 +73,12 @@ export class AppComponent {
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
+  }
+  ngOnInit(): void {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.breadcrumbService.updateBreadcrumbs();
+      }
+    });
   }
 }
