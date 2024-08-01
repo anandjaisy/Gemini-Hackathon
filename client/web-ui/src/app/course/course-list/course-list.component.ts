@@ -10,7 +10,7 @@ import { DialogComponent, FalconTailwindModule } from '@falcon-ng/tailwind';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { CourseDto } from '../courseDto';
-import { CourseUpsertService } from '../course-upsert/course-upsert.service';
+import { CourseService } from '../course.service';
 
 @Component({
   selector: 'app-course-list',
@@ -38,7 +38,7 @@ export class CourseListComponent implements OnInit {
   private courseData: CourseDto[] = [];
   private iDialogData: IDialogData = {} as IDialogData;
   constructor(
-    private courseUpsertService: CourseUpsertService,
+    private courseUpsertService: CourseService,
     private router: Router,
     private dialog: MatDialog
   ) {}

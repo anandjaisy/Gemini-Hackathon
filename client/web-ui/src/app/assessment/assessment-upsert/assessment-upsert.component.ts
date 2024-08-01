@@ -5,12 +5,16 @@ import {
   Appearance,
   Button,
   FalconCoreModule,
+  IOptions,
+  Select,
   Textarea,
   Textbox,
 } from '@falcon-ng/core';
 import { BaseFormComponent, FalconTailwindModule } from '@falcon-ng/tailwind';
-import { AssessmentUpsertService } from './assessment-upsert.service';
+import { AssessmentService } from '../assessment.service';
 import { Observable, of } from 'rxjs';
+import { CourseService } from '../../course/course.service';
+import { CourseDto } from '../../course/courseDto';
 
 @Component({
   selector: 'app-assessment-upsert',
@@ -26,9 +30,10 @@ export class AssessmentUpsertComponent
   private isNew: boolean = false;
   private id: string | undefined = undefined;
   constructor(
-    private assessmentUpsertService: AssessmentUpsertService,
+    private assessmentService: AssessmentService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private courseService: CourseService
   ) {
     super();
     this.defineForm();
@@ -36,6 +41,7 @@ export class AssessmentUpsertComponent
   ngOnInit(): void {
     this.formGroup = this.createControls();
     this.loadAssessment();
+    this.loadCourse();
   }
 
   protected defineForm(): void {
@@ -46,6 +52,19 @@ export class AssessmentUpsertComponent
           formControlName: 'name',
           label: 'Name',
           value: '',
+          validations: [
+            {
+              name: 'required',
+              validator: Validators.required,
+              message: 'Required Field',
+            },
+          ],
+        }),
+        new Select({
+          formControlName: 'course',
+          label: 'Course',
+          options: [],
+          class: 'w-full',
           validations: [
             {
               name: 'required',
@@ -74,7 +93,7 @@ export class AssessmentUpsertComponent
       this.id = params['id'];
       if (this.id != 'new') {
         this.isNew = false;
-        this.assessmentUpsertService
+        this.assessmentService
           .get(this.id as string)
           .subscribe((item) => this.patchValue(item));
       } else {
@@ -83,15 +102,27 @@ export class AssessmentUpsertComponent
     });
   }
 
+  private loadCourse(): void {
+    this.courseService.find().subscribe((courses: CourseDto[]) => {
+      const options: IOptions[] = courses.map((course) => {
+        return {
+          key: course.id,
+          value: course.name,
+        };
+      });
+      this.controlsConfig.baseControls[1].options = options;
+    });
+  }
+
   protected submitDataSource(model: any): Observable<string> {
     if (this.isNew) {
-      this.assessmentUpsertService
+      this.assessmentService
         .post(model)
-        .subscribe(() => this.router.navigate(['./course']));
+        .subscribe(() => this.router.navigate(['./assessment']));
     } else {
-      this.assessmentUpsertService
+      this.assessmentService
         .put(this.id as string, model)
-        .subscribe(() => this.router.navigate(['./course']));
+        .subscribe(() => this.router.navigate(['./assessment']));
     }
     return of(model);
   }

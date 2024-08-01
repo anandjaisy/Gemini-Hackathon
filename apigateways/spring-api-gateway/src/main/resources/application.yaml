@@ -29,14 +29,11 @@ spring:
             - Path=/assessment/**
             - Method=GET
           filters:
-            - RewritePath=/assessment, /bff/assessment
-          metadata:
-            cors:
-              allowedOrigins: '*'
-              allowedMethods:
-                - GET
-              allowedHeaders: '*'
-              maxAge: 30
+            - RewritePath=/assessment/, /bff/assessment/
+            - name: AddResponseHeader # Add CORS header to the response
+              args:
+                name: Access-Control-Allow-Origin
+                value: "http://localhost:4200"
         - id: assessment-service-post-put-delete
           uri: ${ASSESSMENT_SERVICE_URL:http://localhost:8082}
           predicates:

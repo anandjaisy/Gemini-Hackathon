@@ -9,7 +9,7 @@ import {
 import { BaseFormComponent, FalconTailwindModule } from '@falcon-ng/tailwind';
 import { Validators, ReactiveFormsModule } from '@angular/forms';
 import { Observable, of } from 'rxjs';
-import { CourseUpsertService } from './course-upsert.service';
+import { CourseService } from '../course.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -26,7 +26,7 @@ export class CourseUpsertComponent
   private isNew: boolean = false;
   private id: string | undefined = undefined;
   constructor(
-    private courseUpsertService: CourseUpsertService,
+    private courseUpsertService: CourseService,
     private router: Router,
     private activatedRoute: ActivatedRoute
   ) {

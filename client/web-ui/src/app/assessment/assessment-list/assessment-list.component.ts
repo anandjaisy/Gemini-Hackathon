@@ -10,7 +10,7 @@ import { DialogComponent, FalconTailwindModule } from '@falcon-ng/tailwind';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { IBreadCrumb } from '../../common/bread-crumb/bread-crumb.component';
-import { AssessmentUpsertService } from '../assessment-upsert/assessment-upsert.service';
+import { AssessmentService } from '../assessment.service';
 import { CourseDto } from '../../course/courseDto';
 @Component({
   selector: 'app-assessment-list',
@@ -45,7 +45,7 @@ export class AssessmentListComponent {
   private iDialogData: IDialogData = {} as IDialogData;
 
   constructor(
-    private assessmentUpsertService: AssessmentUpsertService,
+    private assessmentService: AssessmentService,
     private router: Router,
     private dialog: MatDialog
   ) {}
@@ -79,7 +79,7 @@ export class AssessmentListComponent {
           data: this.iDialogData,
         });
         dialogRef.afterClosed().subscribe((result) => {
-          this.assessmentUpsertService
+          this.assessmentService
             .delete(event.id)
             .subscribe(() => this.loadAssessment());
         });
@@ -88,7 +88,7 @@ export class AssessmentListComponent {
   }
 
   private loadAssessment(): void {
-    this.assessmentUpsertService.find().subscribe((item) => {
+    this.assessmentService.find().subscribe((item) => {
       this.courseData = item;
       this.matTableConfig.dataSource = this.courseData;
     });

@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { IGenericHttpClient } from '@falcon-ng/tailwind';
 import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
-import { CourseDto } from '../courseDto';
+import { environment } from '../../environments/environment';
+import { CourseDto } from './courseDto';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CourseUpsertService {
+export class CourseService {
   courseUrl: string = `${environment.baseUrl}/course`;
   constructor(private httpClient: HttpClient) {}
 
