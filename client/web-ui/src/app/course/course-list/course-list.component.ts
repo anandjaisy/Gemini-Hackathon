@@ -1,88 +1,60 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
-import {
-  FalconCoreModule,
-  IDialogData,
-  MatTable,
-  MatTableConfig,
-  TableAction,
-} from '@falcon-ng/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FalconCoreModule, IDialogData } from '@falcon-ng/core';
 import { DialogComponent, FalconTailwindModule } from '@falcon-ng/tailwind';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { CourseDto } from '../courseDto';
 import { CourseService } from '../course.service';
+import { TableComponent } from '../../common/table/table.component';
 
 @Component({
   selector: 'app-course-list',
   standalone: true,
-  imports: [FalconTailwindModule, FalconCoreModule],
+  imports: [FalconTailwindModule, FalconCoreModule, TableComponent],
   templateUrl: './course-list.component.html',
   styleUrl: './course-list.component.scss',
 })
 export class CourseListComponent implements OnInit {
-  public displayedColumns = ['action'];
-  matTableConfig: MatTableConfig = {};
-  columns: MatTable[] = [
-    {
-      columnDef: 'name',
-      header: 'Name',
-      cell: (element: any) => `${element.name}`,
-    },
-    {
-      columnDef: 'description',
-      header: 'Description',
-      cell: (element: any) => `${element.description}`,
-    },
-  ];
-
-  private courseData: CourseDto[] = [];
+  headers: string[] = ['Name', 'Description', 'Action'];
+  dataSource: CourseDto[] = [];
   private iDialogData: IDialogData = {} as IDialogData;
+  headerToKeyMap: { [key: string]: string } = {
+    Name: 'name',
+    Description: 'description',
+  };
   constructor(
     private courseUpsertService: CourseService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private cdr: ChangeDetectorRef
   ) {}
   ngOnInit(): void {
-    this.matTableConfig.columns = this.columns;
-    this.matTableConfig.filter = true;
-    this.matTableConfig.paginationConfig = {
-      pagination: true,
-      pageSizeOptions: [10, 50, 100],
-    };
-    this.matTableConfig.action = {
-      edit: true,
-      delete: true,
-      isMenu: false,
-    };
     this.loadCourses();
   }
-  tableActionRowEvent(event: any) {
-    switch (event.action) {
-      case TableAction.Edit:
-        this.router.navigate([`./course/${event.id}`]);
-        break;
-      case TableAction.Delete:
-        this.iDialogData.title = 'Delete';
-        this.iDialogData.bodyMessage = 'Are you sure you want to delete ?';
-        this.iDialogData.cancelBtnText = 'No';
-        this.iDialogData.mainbtnText = 'Yes';
-        const dialogRef = this.dialog.open(DialogComponent, {
-          width: '350px',
-          data: this.iDialogData,
-        });
-        dialogRef.afterClosed().subscribe((result) => {
-          this.courseUpsertService
-            .delete(event.id)
-            .subscribe(() => this.loadCourses());
-        });
-        break;
-    }
+
+  editEmitterAction(event: string): void {
+    this.router.navigate([`./course/${event}`]);
+  }
+  deleteEmitterAction(event: string): void {
+    this.iDialogData.title = 'Delete';
+    this.iDialogData.bodyMessage = 'Are you sure you want to delete ?';
+    this.iDialogData.cancelBtnText = 'No';
+    this.iDialogData.mainbtnText = 'Yes';
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '350px',
+      data: this.iDialogData,
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      this.courseUpsertService
+        .delete(event)
+        .subscribe(() => this.loadCourses());
+    });
   }
 
   private loadCourses(): void {
     this.courseUpsertService.find().subscribe((item) => {
-      this.courseData = item;
-      this.matTableConfig.dataSource = this.courseData;
+      this.dataSource = item;
+      this.cdr.detectChanges();
     });
   }
 }

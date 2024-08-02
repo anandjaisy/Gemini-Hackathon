@@ -1,10 +1,18 @@
-<div class="mx-12 my-12">
-    <div class="flex justify-end mb-7">
-        <a mat-flat-button routerLink="./new" routerLinkActive="active">Add course</a>
-    </div>
-    <fal-card>
-        <falcon-table [matTableConfig]="matTableConfig" [displayedColumns]="displayedColumns"
-            (tableActionRowEvent)="tableActionRowEvent($event)"></falcon-table>
+<div class="mx-5 my-5">
+    <fal-card [backgroundColor]="'#f7fafc'">
+        <div class="p-5">
+            <div class="flex justify-between">
+                <div>
+                    <span class="text-lg">Course</span>
+                    <p class="font-thin">A list of all the courses created by you including their name and description.
+                    </p>
+                </div>
+                <div>
+                    <a mat-flat-button routerLink="./new" routerLinkActive="active">Add course</a>
+                </div>
+            </div>
+            <app-table [headers]="headers" [dataSource]="dataSource" [headerToKeyMap]="headerToKeyMap"
+                (editEmitterAction)="editEmitterAction($event)" (deleteEmitterAction)="deleteEmitterAction($event)" />
+        </div>
     </fal-card>
-
 </div>

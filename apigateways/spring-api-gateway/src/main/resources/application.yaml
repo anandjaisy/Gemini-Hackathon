@@ -6,7 +6,7 @@ spring:
       globalcors:
         cors-configurations:
           '[/**]':
-            allowedOrigins: "*"
+            allowedOrigins: "http://localhost:4200"
             allowedHeaders: "*"
             allowedMethods:
               - GET
@@ -23,14 +23,21 @@ spring:
           predicates:
             - Path=/course/**, /swagger/**
         - id: assessment-service-get
-          uri: ${ASSESSMENT_BFF_SERVICE_URL:http://localhost:8083}
+          uri: http://localhost:8083
           predicates:
             - Path=/assessment/**
             - Method=GET
           filters:
-            - RewritePath=/assessment/(?<segment>.*), /bff/assessment/$\{segment}
+            - RewritePath=/assessment/?(?<segment>.*), /bff/assessment/$\{segment}
+          metadata:
+            - Cors:
+                name: assessment-get-cors
+                args:
+                  allowedOrigins: "*"
+                  allowedMethods: "GET,POST,PUT,DELETE,OPTIONS,HEAD,PATCH"
+                  allowedHeaders: "*"
         - id: assessment-service-post-put-delete
-          uri: ${ASSESSMENT_SERVICE_URL:http://localhost:8082}
+          uri: http://localhost:8082
           predicates:
             - Path=/assessment/**
             - Method=POST,PUT,DELETE

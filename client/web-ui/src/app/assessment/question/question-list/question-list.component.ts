@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 import { FalconCoreModule } from '@falcon-ng/core';
 
 @Component({
-  selector: 'app-question',
+  selector: 'app-question-list',
   standalone: true,
   imports: [
     FalconCoreModule,
@@ -17,7 +17,7 @@ import { FalconCoreModule } from '@falcon-ng/core';
     MatPaginatorModule,
     RouterModule,
   ],
-  templateUrl: './question.component.html',
-  styleUrl: './question.component.scss',
+  templateUrl: './question-list.component.html',
+  styleUrl: './question-list.component.scss',
 })
-export class QuestionComponent {}
+export class QuestionListComponent {}

@@ -1,10 +1,20 @@
-<div class="mx-12 my-12">
-    <div class="flex justify-end mb-7">
-        <a mat-flat-button routerLink="./new" routerLinkActive="active">Add assessment</a>
-    </div>
-    <fal-card>
-        <falcon-table [matTableConfig]="matTableConfig" [displayedColumns]="displayedColumns"
-            (tableActionRowEvent)="tableActionRowEvent($event)"></falcon-table>
-    </fal-card>
+<div class="mx-5 my-5">
+    <fal-card [backgroundColor]="'#f7fafc'">
+        <div class="p-5">
+            <div class="flex justify-between">
+                <div>
+                    <span class="text-lg">Assessment</span>
+                    <p class="font-thin">A list of all the assessment created by you including their name, description
+                        and due date</p>
+                </div>
+                <div>
+                    <a mat-flat-button routerLink="./new" routerLinkActive="active">Add assessment</a>
+                </div>
+            </div>
 
+            <app-table [headers]="headers" [dataSource]="assessmentData" [headerToKeyMap]="headerToKeyMap"
+                (editEmitterAction)="editEmitterAction($event)" (deleteEmitterAction)="deleteEmitterAction($event)" />
+
+        </div>
+    </fal-card>
 </div>
