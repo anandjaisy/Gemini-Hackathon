@@ -1,1 +1,19 @@
-<p>enrolment works!</p>
+<div class="mx-5 my-5">
+    <fal-card [backgroundColor]="'#edf2f7'">
+        <div class="p-5">
+            <div class="flex justify-between">
+                <div>
+                    <span class="text-lg">Enrolments</span>
+                    <p class="font-thin">A list of all the enrolments in your account including their name, title, email
+                        and
+                        role.</p>
+                </div>
+                <div>
+                    <a mat-flat-button routerLink="./new" routerLinkActive="active">Add enrolment</a>
+                </div>
+            </div>
+            <app-table [headers]="headers" [dataSource]="dataSource" [headerToKeyMap]="headerToKeyMap"
+                (editEmitterAction)="editEmitterAction($event)" (deleteEmitterAction)="deleteEmitterAction($event)" />
+        </div>
+    </fal-card>
+</div>

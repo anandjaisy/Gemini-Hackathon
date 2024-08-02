@@ -1,0 +1,33 @@
+<div class="shadow-inner rounded-lg border border-solid border border-slate-300 mt-5">
+
+    <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+        <thead class="bg-gray-100">
+            <tr>
+                @for(header of headers; track header){
+                <th class="py-4 px-6 text-left text-xs font-medium uppercase tracking-wider">{{header}}</th>
+                }
+            </tr>
+        </thead>
+        <tbody class="table-with-dividers">
+            @for(data of dataSource; track data){
+            <tr class="divide-y divide-gray-200">
+                @for(header of headers; track header){
+                @if (header != 'Action') {
+                <td class="py-3 px-6 text-sm font-thin text-gray-500">{{data | tableheaderkeyMapper: header:
+                    headerToKeyMap}}</td>
+                }
+                @else {
+                <td class="py-3 px-6 text-sm font-thin">
+                    <a (click)="tableAction(0, data?.id)"
+                        class="text-indigo-600 hover:text-indigo-900 cursor-pointer hover:underline">Edit</a> |
+                    <a (click)="tableAction(1, data?.id)"
+                        class="text-indigo-600 hover:text-indigo-900 cursor-pointer hover:underline">Delete</a>
+                </td>
+                }
+                }
+            </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

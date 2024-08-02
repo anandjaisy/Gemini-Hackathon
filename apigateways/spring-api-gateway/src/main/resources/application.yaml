@@ -16,7 +16,6 @@ spring:
               - OPTIONS
               - HEAD
               - PATCH
-              - TRACE
       routes:
         - id: course-service
           uri:
@@ -29,11 +28,7 @@ spring:
             - Path=/assessment/**
             - Method=GET
           filters:
-            - RewritePath=/assessment/, /bff/assessment/
-            - name: AddResponseHeader # Add CORS header to the response
-              args:
-                name: Access-Control-Allow-Origin
-                value: "http://localhost:4200"
+            - RewritePath=/assessment/(?<segment>.*), /bff/assessment/$\{segment}
         - id: assessment-service-post-put-delete
           uri: ${ASSESSMENT_SERVICE_URL:http://localhost:8082}
           predicates:

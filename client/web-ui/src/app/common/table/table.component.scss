@@ -1,0 +1,24 @@
+@import "../../../theme_variable.scss";
+
+table {
+  border-collapse: collapse;
+}
+
+table thead {
+  border-bottom: 2px solid #e5e7eb;
+}
+
+thead th:first-child {
+  border-top-left-radius: 6px;
+}
+
+thead th:last-child {
+  border-top-right-radius: 6px;
+}
+
+table tbody tr:not(:last-child) {
+  border-bottom: 1px solid #e5e7eb;
+}
+tr:hover {
+  background-color: #f5f5f5;
+}

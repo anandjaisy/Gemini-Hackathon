@@ -4,4 +4,16 @@
 
 $light-primary: mat.get-theme-color(theme.$Gemini-ui-light-theme, primary, 50);
 $dark-primary: mat.get-theme-color(theme.$Gemini-ui-dark-theme, primary, 50);
-$neutral-70: mat.get-theme-color(theme.$Gemini-ui-light-theme, neutral-variant, 70);
+$neutral-70: mat.get-theme-color(
+  theme.$Gemini-ui-light-theme,
+  neutral-variant,
+  70
+);
+
+$_custom-color: (
+  gray-eb: #f5f5f5,
+);
+
+@function get-color($color-name) {
+  @return map-get($_custom-color, $color-name);
+}
