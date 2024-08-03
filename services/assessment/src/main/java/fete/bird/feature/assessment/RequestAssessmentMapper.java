@@ -2,6 +2,7 @@ package fete.bird.feature.assessment;
 
 import jakarta.inject.Singleton;
 
+import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.BiFunction;
@@ -15,7 +16,7 @@ public record RequestAssessmentMapper() implements BiFunction<Optional<UUID>,Ass
                 request.name(),
                 request.description(),
                 request.courseId(),
-                request.assessmentDate(),
-                request.assessmentDueDate());
+                Instant.now(),
+                request.dueDate());
     }
 }

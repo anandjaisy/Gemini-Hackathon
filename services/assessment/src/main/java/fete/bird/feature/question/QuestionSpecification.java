@@ -16,6 +16,6 @@ public class QuestionSpecification implements Predicate<Question> {
     }
     @Override
     public boolean test(Question question) {
-        return false;
+        return this.criteria.isEmpty();
     }
 }

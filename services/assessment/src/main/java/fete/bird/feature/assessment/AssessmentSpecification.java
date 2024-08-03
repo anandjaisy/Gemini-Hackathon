@@ -17,6 +17,8 @@ public class AssessmentSpecification implements Predicate<Assessment> {
     }
     @Override
     public boolean test(Assessment assessment) {
+        if (this.criteria.isEmpty())
+            return true;
         return false;
     }
 }

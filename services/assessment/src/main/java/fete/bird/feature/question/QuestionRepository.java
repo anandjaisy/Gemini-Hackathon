@@ -1,5 +1,6 @@
 package fete.bird.feature.question;
 
+import fete.bird.feature.assessment.Assessment;
 import fete.bird.persistence.Root;
 import fete.bird.shared.Constants;
 import fete.bird.shared.DuplicateException;
@@ -45,11 +46,11 @@ public class QuestionRepository implements IRepository<QuestionResponse, Questio
 
     @Override
     public Optional<QuestionResponse> create(QuestionRequest request) throws DuplicateException {
-        if (questionData.values().stream().anyMatch(x -> x.question().equals(request.question())))
+        if (questionData.values().stream().anyMatch(x -> x.question().equals(request.question()) && x.assessmentId().equals(request.assessmentId())))
             throw new DuplicateException(String.format("%s %s",request.question(), "already exists !"));
-        var assessment = requestQuestionMapper.apply(Optional.empty(),request);
-        this.save(assessment);
-        return Optional.of(questionResponseMapper.apply(assessment));
+        var question = requestQuestionMapper.apply(Optional.empty(),request);
+        this.save(this.questionData,question);
+        return Optional.of(questionResponseMapper.apply(question));
     }
 
     @Override
@@ -58,22 +59,25 @@ public class QuestionRepository implements IRepository<QuestionResponse, Questio
         if (assessment == null)
             throw new NotFoundException(Constants.NO_Record_Found);
         var updateAssessment =  requestQuestionMapper.apply(Optional.of(assessment.id()),request);
-        save(updateAssessment);
+        save(this.questionData,updateAssessment);
         return Optional.of(questionResponseMapper.apply(updateAssessment));
     }
 
     @Override
     public void delete(UUID id) {
-        deleteCourseById(id);
+        deleteById(this.questionData,id);
     }
-    @StoreParams("Course")
-    protected void save(@NonNull Question question) {
-        questionData.put(question.id(), question);
+
+
+    @StoreParams("question")
+    protected void save(Map<UUID, Question> question, @NonNull Question request) {
+        question.put(request.id(), request);
     }
-    @StoreParams("Course")
-    protected void deleteCourseById(@NonNull UUID id) {
-        if (questionData.get(id) == null)
+
+    @StoreParams("question")
+    protected void deleteById(Map<UUID, Question> question, @NonNull UUID id) {
+        if (question.get(id) == null)
             throw new NotFoundException(Constants.NO_Record_Found);
-        questionData.remove(id);
+        question.remove(id);
     }
 }

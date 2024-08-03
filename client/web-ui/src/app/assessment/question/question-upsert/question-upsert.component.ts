@@ -1,31 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
 import {
   Appearance,
   Button,
-  DatePicker,
   FalconCoreModule,
-  IOptions,
   Select,
   Textarea,
-  Textbox,
 } from '@falcon-ng/core';
 import { BaseFormComponent, FalconTailwindModule } from '@falcon-ng/tailwind';
-import { AssessmentService } from '../assessment.service';
-import { Observable, of } from 'rxjs';
-import { CourseService } from '../../course/course.service';
-import { CourseDto } from '../../course/courseDto';
-import { transformToKeyValuePair } from '../../common/utils';
+import { AssessmentService } from '../../assessment.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { transformToKeyValuePair } from '../../../common/utils';
+import { QuestionService } from '../question.service';
 
 @Component({
-  selector: 'app-assessment-upsert',
+  selector: 'app-question-upsert',
   standalone: true,
   imports: [FalconCoreModule, ReactiveFormsModule, FalconTailwindModule],
-  templateUrl: './assessment-upsert.component.html',
-  styleUrl: './assessment-upsert.component.scss',
+  templateUrl: './question-upsert.component.html',
+  styleUrl: './question-upsert.component.scss',
 })
-export class AssessmentUpsertComponent
+export class QuestionUpsertComponent
   extends BaseFormComponent<string>
   implements OnInit
 {
@@ -35,7 +31,7 @@ export class AssessmentUpsertComponent
     private assessmentService: AssessmentService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private courseService: CourseService
+    private questionService: QuestionService
   ) {
     super();
     this.defineForm();
@@ -43,17 +39,18 @@ export class AssessmentUpsertComponent
   ngOnInit(): void {
     this.formGroup = this.createControls();
     this.loadAssessment();
-    this.loadCourse();
+    this.loadQuestion();
   }
 
   protected defineForm(): void {
     this.controlsConfig = {
       class: 'flex flex-col m-5',
       baseControls: [
-        new Textbox({
-          formControlName: 'name',
-          label: 'Name',
+        new Textarea({
+          formControlName: 'question',
+          label: 'Type question',
           value: '',
+          textAreaProperty: { rows: 8 },
           validations: [
             {
               name: 'required',
@@ -63,8 +60,8 @@ export class AssessmentUpsertComponent
           ],
         }),
         new Select({
-          formControlName: 'courseId',
-          label: 'Course',
+          formControlName: 'assessmentId',
+          label: 'Select assessment',
           options: [],
           class: 'w-full',
           validations: [
@@ -75,10 +72,11 @@ export class AssessmentUpsertComponent
             },
           ],
         }),
-        new DatePicker({
-          formControlName: 'dueDate',
-          label: 'Due date',
-          class: 'w-full',
+        new Textarea({
+          formControlName: 'answer',
+          label: 'Type answer',
+          value: '',
+          textAreaProperty: { rows: 8 },
           validations: [
             {
               name: 'required',
@@ -86,11 +84,6 @@ export class AssessmentUpsertComponent
               message: 'Required Field',
             },
           ],
-        }),
-        new Textarea({
-          formControlName: 'description',
-          label: 'Description',
-          value: '',
         }),
         new Button({
           label: 'Save',
@@ -102,12 +95,12 @@ export class AssessmentUpsertComponent
     };
   }
 
-  private loadAssessment(): void {
+  private loadQuestion(): void {
     this.activatedRoute.params.subscribe((params) => {
       this.id = params['id'];
       if (this.id != 'new') {
         this.isNew = false;
-        this.assessmentService
+        this.questionService
           .get(this.id as string)
           .subscribe((item) => this.patchValue(item));
       } else {
@@ -116,22 +109,22 @@ export class AssessmentUpsertComponent
     });
   }
 
-  private loadCourse(): void {
-    this.courseService.find().subscribe((courses: CourseDto[]) => {
-      const options = transformToKeyValuePair(courses);
+  private loadAssessment(): void {
+    this.assessmentService.find().subscribe((item) => {
+      const options = transformToKeyValuePair(item);
       this.controlsConfig.baseControls[1].options = options;
     });
   }
 
   protected submitDataSource(model: any): Observable<string> {
     if (this.isNew) {
-      this.assessmentService
+      this.questionService
         .post(model)
-        .subscribe(() => this.router.navigate(['./assessment']));
+        .subscribe(() => this.router.navigate(['./assessment/question']));
     } else {
-      this.assessmentService
+      this.questionService
         .put(this.id as string, model)
-        .subscribe(() => this.router.navigate(['./assessment']));
+        .subscribe(() => this.router.navigate(['./assessment/question']));
     }
     return of(model);
   }

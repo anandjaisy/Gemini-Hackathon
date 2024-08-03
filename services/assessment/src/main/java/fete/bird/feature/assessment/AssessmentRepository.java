@@ -48,7 +48,7 @@ public class AssessmentRepository implements IRepository<AssessmentResponse,Asse
         if (assessmentData.values().stream().anyMatch(x -> x.name().equals(request.name())))
             throw new DuplicateException(String.format("%s %s", request.name(), Constants.ITEM_EXIST));
         var assessment = requestAssessmentMapper.apply(Optional.empty(),request);
-        this.save(assessment);
+        this.save(this.assessmentData, assessment);
         return Optional.of(assessmentResponseMapper.apply(assessment));
     }
 
@@ -58,23 +58,23 @@ public class AssessmentRepository implements IRepository<AssessmentResponse,Asse
         if (assessment == null)
             throw new NotFoundException(Constants.NO_Record_Found);
         var updateAssessment =  requestAssessmentMapper.apply(Optional.of(assessment.id()),request);
-        save(updateAssessment);
+        save(this.assessmentData, updateAssessment);
         return Optional.of(assessmentResponseMapper.apply(updateAssessment));
     }
 
     @Override
     public void delete(UUID id) {
-        deleteCourseById(id);
+        deleteCourseById(this.assessmentData, id);
     }
-    @StoreParams("Course")
-    protected void save(@NonNull Assessment assessment) {
-        assessmentData.put(assessment.id(), assessment);
+    @StoreParams("assessment")
+    protected void save(Map<UUID, Assessment> assessment, @NonNull Assessment request) {
+        assessment.put(request.id(), request);
     }
 
-    @StoreParams("Course")
-    protected void deleteCourseById(@NonNull UUID id) {
-        if (assessmentData.get(id) == null)
+    @StoreParams("assessment")
+    protected void deleteCourseById(Map<UUID, Assessment> assessment,@NonNull UUID id) {
+        if (assessment.get(id) == null)
             throw new NotFoundException(Constants.NO_Record_Found);
-        assessmentData.remove(id);
+        assessment.remove(id);
     }
 }

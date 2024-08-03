@@ -5,5 +5,6 @@ export interface AssessmentDto {
   name: string;
   description: string;
   course: CourseDto;
-  assessmentDueDate: string;
+  createdDate: string;
+  dueDate: string;
 }

@@ -1,0 +1,9 @@
+<div class="mx-12 my-12 flex justify-center">
+    <div class="container">
+        <fal-card>
+            <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" novalidate>
+                <control-builder [layout]="controlsConfig" [formGroup]="formGroup"></control-builder>
+            </form>
+        </fal-card>
+    </div>
+</div>

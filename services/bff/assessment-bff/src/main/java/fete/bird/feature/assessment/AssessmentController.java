@@ -1,11 +1,11 @@
-package fete.bird;
+package fete.bird.feature.assessment;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import fete.bird.Course;
+import io.micronaut.core.type.Argument;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
-
+import io.micronaut.serde.ObjectMapper;
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -17,12 +17,16 @@ import java.util.concurrent.ExecutionException;
 
 @Controller("bff/assessment")
 public class AssessmentController {
-    HttpClient client = HttpClient.newHttpClient();
-    ObjectMapper objectMapper = new ObjectMapper();
+    private final HttpClient client = HttpClient.newHttpClient();
+    private final ObjectMapper objectMapper;
+
+    public AssessmentController(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
     @Get
-    public List<AssessmentResponse> get() throws ExecutionException, InterruptedException, JsonProcessingException {
-        List<AssessmentResponse> assessmentResponses = new ArrayList<>();
+    public List<AssessmentResponse> get() throws ExecutionException, InterruptedException, IOException {
+        List<AssessmentResponse> assessmentResponses;
         List<URI> uris = List.of(
                 URI.create("http://localhost:8082/assessment"),
                 URI.create("http://localhost:8081/course")
@@ -43,9 +47,9 @@ public class AssessmentController {
             String responseBody = response.body();
 
             if (response.uri().getPath().endsWith("assessment")) {
-                assessments = objectMapper.readValue(responseBody, new TypeReference<>() {});
+                assessments = objectMapper.readValue(responseBody, Argument.listOf(Assessment.class));
             } else if (response.uri().getPath().endsWith("course")) {
-                courses.addAll(objectMapper.readValue(responseBody, new TypeReference<>() {}));
+                courses.addAll(objectMapper.readValue(responseBody, Argument.listOf(Course.class)));
             }
         }
         assessmentResponses = assessments.stream()
@@ -55,8 +59,8 @@ public class AssessmentController {
                             assessment.name(),
                             assessment.description(),
                             course,
-                            assessment.assessmentDate(),
-                            assessment.assessmentDueDate());
+                            assessment.createdDate(),
+                            assessment.dueDate());
                 }).toList();
         return assessmentResponses;
     }

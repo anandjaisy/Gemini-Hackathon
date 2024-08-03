@@ -1,2 +1,53 @@
-<fal-card>
-</fal-card>
+<div class="mx-5 my-5">
+    <fal-card>
+        <div class="flex justify-between">
+            <div class="flex flex-col">
+                <span class="font-medium text-neutral-600">Assessment name</span>
+                <span class="text-slate-700 font-thin text-sm">25 January 2024</span>
+            </div>
+            <div>
+                <button class="bg-slate-500" mat-icon-button [matMenuTriggerFor]="menu"
+                    aria-label="Example icon-button with a menu">
+                    <mat-icon class="text-slate-400 hover:text-black">more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item>
+                        <mat-icon color="primary" class="text-base">edit</mat-icon>
+                        <span class="font-thin">Edit</span>
+                    </button>
+                    <button mat-menu-item color="accent">
+                        <mat-icon color="warn" class="text-base">delete</mat-icon>
+                        <span class="font-thin">Delete</span>
+                    </button>
+                </mat-menu>
+            </div>
+        </div>
+        <div class="flex flex-col gap-5 mt-5">
+            <div class="flex justify-start gap-5">
+                <button mat-mini-fab color="primary" aria-label="Example icon button with a menu icon"
+                    class="text-lg font-thin">
+                    Q
+                </button>
+                <p class="text-slate-600 font-thin text-sm text-slate-400">Lorem ipsum dolor sit, amet consectetur
+                    adipisicing elit. Illo
+                    impedit
+                    sapiente recusandae iusto
+                    officiis dolor? Laborum quibusdam quam, quidem vel assumenda repellat inventore sint nesciunt, ullam
+                    asperiores magnam placeat eveniet. Aliquam voluptatibus assumenda distinctio veniam quam tempora
+                    modi aperiam nemo voluptate reprehenderit quidem, nisi vero est.</p>
+            </div>
+            <div class="flex justify-start gap-5">
+                <button mat-mini-fab aria-label="Example icon button with a menu icon" class="text-lg font-thin">
+                    A
+                </button>
+                <p class="text-slate-600 font-thin text-sm text-slate-400">Lorem ipsum dolor sit, amet consectetur
+                    adipisicing elit. Illo
+                    impedit
+                    sapiente recusandae iusto
+                    officiis dolor? Laborum quibusdam quam, quidem vel assumenda repellat inventore sint nesciunt, ullam
+                    asperiores magnam placeat eveniet. Aliquam voluptatibus assumenda distinctio veniam quam tempora
+                    modi aperiam nemo voluptate reprehenderit quidem, nisi vero est.</p>
+            </div>
+        </div>
+    </fal-card>
+</div>

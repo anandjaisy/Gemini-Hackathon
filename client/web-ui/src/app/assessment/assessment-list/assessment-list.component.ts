@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FalconCoreModule, IDialogData } from '@falcon-ng/core';
 import { DialogComponent, FalconTailwindModule } from '@falcon-ng/tailwind';
 import { Router } from '@angular/router';
@@ -14,18 +14,19 @@ import { TableComponent } from '../../common/table/table.component';
   styleUrl: './assessment-list.component.scss',
 })
 export class AssessmentListComponent {
-  headers: string[] = ['Name', 'Course', 'DueDate', 'Action'];
+  headers: string[] = ['Name', 'Course', 'Due Date', 'Action'];
   assessmentData: AssessmentDto[] = [];
   private iDialogData: IDialogData = {} as IDialogData;
   headerToKeyMap: { [key: string]: string } = {
     Name: 'name',
     Course: 'course.name',
-    DueDate: 'dueDate',
+    'Due Date': 'dueDate',
   };
   constructor(
     private assessmentService: AssessmentService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private cdr: ChangeDetectorRef
   ) {}
   ngOnInit(): void {
     this.loadAssessment();
@@ -53,6 +54,7 @@ export class AssessmentListComponent {
   private loadAssessment(): void {
     this.assessmentService.find().subscribe((item) => {
       this.assessmentData = item;
+      this.cdr.detectChanges();
     });
   }
 }
