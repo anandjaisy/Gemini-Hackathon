@@ -30,7 +30,7 @@ public record AssessmentController(IRepository<AssessmentResponse, AssessmentReq
     }
 
     @Override
-    public Optional<AssessmentResponse> update(UUID id, AssessmentRequest request) {
+    public Optional<AssessmentResponse> update(@PathVariable UUID id, @Body AssessmentRequest request) {
         return iAssessmentRepository.update(id, request);
     }
 

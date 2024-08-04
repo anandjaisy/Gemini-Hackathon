@@ -31,17 +31,23 @@ spring:
           uri:
             ${ASSESSMENT_SERVICE_URL:http://localhost:8083}
           predicates:
-            - Path=/assessment/**
+            - Path=/assessment
             - Method=GET,OPTIONS
           filters:
 #            - RewritePath=/(?<path>assessment|question)/?(?<segment>.*), /bff/$\{path}/$\{segment}
-            - RewritePath=/assessment/?(?<segment>.*), /bff/assessment/$\{segment}
+            - RewritePath=/assessment, /bff/assessment
+        - id: assessment-service-get-with-parameter
+          uri:
+            ${ASSESSMENT_SERVICE_URL:http://localhost:8082}
+          predicates:
+            - Path=/assessment/**
+            - Method=GET,OPTIONS
         - id: assessment-service-post-put-delete
           uri:
             ${ASSESSMENT_SERVICE_URL:http://localhost:8082}
           predicates:
             - Path=/assessment/**, /question/**
-            - Method=POST,PUT,DELETE,OPTIONS
+            - Method=POST,PUT,PATCH,DELETE,OPTIONS
 #logging:
 #  level:
 #    org.springframework.cloud.gateway: DEBUG

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
@@ -35,7 +35,8 @@ export class AssessmentUpsertComponent
     private assessmentService: AssessmentService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private courseService: CourseService
+    private courseService: CourseService,
+    private cdr: ChangeDetectorRef
   ) {
     super();
     this.defineForm();
@@ -120,6 +121,7 @@ export class AssessmentUpsertComponent
     this.courseService.find().subscribe((courses: CourseDto[]) => {
       const options = transformToKeyValuePair(courses);
       this.controlsConfig.baseControls[1].options = options;
+      this.cdr.detectChanges();
     });
   }
 

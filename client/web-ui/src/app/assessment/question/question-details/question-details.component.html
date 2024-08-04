@@ -12,11 +12,11 @@
                     <mat-icon class="text-slate-400 hover:text-black">more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                    <button mat-menu-item>
+                    <button mat-menu-item (click)="menuAction(0, question.id)">
                         <mat-icon color="primary" class="text-base">edit</mat-icon>
                         <span class="font-thin">Edit</span>
                     </button>
-                    <button mat-menu-item color="accent">
+                    <button mat-menu-item color="accent" (click)="menuAction(1, question.id)">
                         <mat-icon color="warn" class="text-base">delete</mat-icon>
                         <span class="font-thin">Delete</span>
                     </button>
@@ -29,13 +29,15 @@
                     class="text-lg font-thin">
                     Q
                 </button>
-                <p class="text-slate-600 font-thin text-sm text-slate-400">{{question?.question}}</p>
+                <p class="inline-block align-middle text-slate-600 font-thin text-sm text-slate-400">
+                    {{question?.question}}</p>
             </div>
             <div class="flex justify-start gap-5">
                 <button mat-mini-fab aria-label="Example icon button with a menu icon" class="text-lg font-thin">
                     A
                 </button>
-                <p class="text-slate-600 font-thin text-sm text-slate-400">{{question?.answer}}</p>
+                <p class="inline-block align-middle text-slate-600 font-thin text-sm text-slate-400">
+                    {{question?.answer}}</p>
             </div>
         </div>
         }

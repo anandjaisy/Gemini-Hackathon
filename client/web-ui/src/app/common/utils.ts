@@ -9,7 +9,7 @@ export function transformToKeyValuePair<T>(array: any[]): IOptions[] {
 }
 
 export abstract class AHttpOperation {
-  abstract find(): Observable<any>;
+  abstract find<T>(params?: T): Observable<any>;
   abstract get(id: string): Observable<any>;
   abstract post<T>(model: T): Observable<any>;
   abstract put<T>(id: string, model: T): Observable<any>;

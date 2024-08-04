@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { AHttpOperation } from '../../common/utils';
 import { QuestionDto } from './QuestionDto';
 
@@ -14,8 +14,12 @@ export class QuestionService extends AHttpOperation {
     super();
   }
 
-  public find(): Observable<any> {
-    return this.httpClient.get(this.questionUrl);
+  override find<String>(assessmentId?: String): Observable<any> {
+    let params = new HttpParams();
+    if (assessmentId) {
+      params = params.set('assessmentId', assessmentId as string);
+    }
+    return this.httpClient.get(this.questionUrl, { params });
   }
 
   public get(id: string): Observable<any> {

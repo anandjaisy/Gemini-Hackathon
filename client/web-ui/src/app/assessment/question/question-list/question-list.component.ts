@@ -60,7 +60,7 @@ export class QuestionListComponent {
   }
 
   private loadQuestionForAssessment(id: string): void {
-    this.questionService.find().subscribe((questions) => {
+    this.questionService.find(id).subscribe((questions) => {
       this.questionList = questions;
       this.cdr.detectChanges();
     });

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import {
@@ -31,7 +31,8 @@ export class QuestionUpsertComponent
     private assessmentService: AssessmentService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private questionService: QuestionService
+    private questionService: QuestionService,
+    private cdr: ChangeDetectorRef
   ) {
     super();
     this.defineForm();
@@ -100,9 +101,10 @@ export class QuestionUpsertComponent
       this.id = params['id'];
       if (this.id != 'new') {
         this.isNew = false;
-        this.questionService
-          .get(this.id as string)
-          .subscribe((item) => this.patchValue(item));
+        this.questionService.get(this.id as string).subscribe((item) => {
+          this.patchValue(item);
+          this.controlsConfig.baseControls[1].value = item?.assessment?.id;
+        });
       } else {
         this.isNew = true;
       }
@@ -113,6 +115,7 @@ export class QuestionUpsertComponent
     this.assessmentService.find().subscribe((item) => {
       const options = transformToKeyValuePair(item);
       this.controlsConfig.baseControls[1].options = options;
+      this.cdr.detectChanges();
     });
   }
 

@@ -21,6 +21,7 @@ import {
   BreadCrumbComponent,
   IBreadCrumb,
 } from './common/bread-crumb/bread-crumb.component';
+import { AuthService } from '@falcon-ng/tailwind';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -64,7 +65,8 @@ export class AppComponent {
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
     private router: Router,
-    private breadcrumbService: BreadcrumbService
+    private breadcrumbService: BreadcrumbService,
+    public authService: AuthService
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();

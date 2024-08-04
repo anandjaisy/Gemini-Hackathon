@@ -4,11 +4,12 @@
   }
   <mat-divider></mat-divider>
   <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-    <mat-sidenav #sidenav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
+    @if(authService.isLoggedIn()) {
+    <mat-sidenav #sidenav opened [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches"
       fixedTopGap="56">
       <app-toolbar-menu />
     </mat-sidenav>
-
+    }
     <mat-sidenav-content>
       <fetebird-bread-crumb />
       <router-outlet />
