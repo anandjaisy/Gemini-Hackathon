@@ -15,6 +15,7 @@ public record QuestionResponseMapper(
         return new QuestionResponse(question.id(),
                 iAssessmentRepository.get(question.assessmentId()).orElse(null),
                 question.question(),
-                question.answer());
+                question.answer(),
+                question.createdDate());
     }
 }

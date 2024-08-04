@@ -1,9 +1,10 @@
 <div class="mx-5 my-5">
     <fal-card>
+        @if(question$ | async; as question) {
         <div class="flex justify-between">
             <div class="flex flex-col">
-                <span class="font-medium text-neutral-600">Assessment name</span>
-                <span class="text-slate-700 font-thin text-sm">25 January 2024</span>
+                <span class="font-medium text-neutral-600">{{question?.assessment?.name}}</span>
+                <span class="text-slate-700 font-thin text-sm">Created date : {{question?.createdDate | date }}</span>
             </div>
             <div>
                 <button class="bg-slate-500" mat-icon-button [matMenuTriggerFor]="menu"
@@ -28,26 +29,15 @@
                     class="text-lg font-thin">
                     Q
                 </button>
-                <p class="text-slate-600 font-thin text-sm text-slate-400">Lorem ipsum dolor sit, amet consectetur
-                    adipisicing elit. Illo
-                    impedit
-                    sapiente recusandae iusto
-                    officiis dolor? Laborum quibusdam quam, quidem vel assumenda repellat inventore sint nesciunt, ullam
-                    asperiores magnam placeat eveniet. Aliquam voluptatibus assumenda distinctio veniam quam tempora
-                    modi aperiam nemo voluptate reprehenderit quidem, nisi vero est.</p>
+                <p class="text-slate-600 font-thin text-sm text-slate-400">{{question?.question}}</p>
             </div>
             <div class="flex justify-start gap-5">
                 <button mat-mini-fab aria-label="Example icon button with a menu icon" class="text-lg font-thin">
                     A
                 </button>
-                <p class="text-slate-600 font-thin text-sm text-slate-400">Lorem ipsum dolor sit, amet consectetur
-                    adipisicing elit. Illo
-                    impedit
-                    sapiente recusandae iusto
-                    officiis dolor? Laborum quibusdam quam, quidem vel assumenda repellat inventore sint nesciunt, ullam
-                    asperiores magnam placeat eveniet. Aliquam voluptatibus assumenda distinctio veniam quam tempora
-                    modi aperiam nemo voluptate reprehenderit quidem, nisi vero est.</p>
+                <p class="text-slate-600 font-thin text-sm text-slate-400">{{question?.answer}}</p>
             </div>
         </div>
+        }
     </fal-card>
 </div>

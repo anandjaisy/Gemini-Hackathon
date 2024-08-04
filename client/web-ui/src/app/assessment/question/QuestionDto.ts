@@ -5,4 +5,5 @@ export interface QuestionDto {
   assessment: AssessmentDto;
   question: string;
   answer: string;
+  createdDate: string;
 }

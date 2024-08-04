@@ -1,4 +1,7 @@
 package fete.bird.feature.question;
 
-public record QuestionCriteria() {
+import io.micronaut.serde.annotation.Serdeable;
+
+@Serdeable
+public record QuestionCriteria(String assessmentId, String questionId) {
 }

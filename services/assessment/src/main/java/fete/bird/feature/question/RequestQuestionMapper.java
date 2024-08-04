@@ -1,6 +1,8 @@
 package fete.bird.feature.question;
 
 import jakarta.inject.Singleton;
+
+import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.BiFunction;
@@ -13,6 +15,7 @@ public record RequestQuestionMapper() implements BiFunction<Optional<UUID>, Ques
         return new Question(id,
                 request.assessmentId(),
                 request.question(),
-                request.answer());
+                request.answer(),
+                Instant.now());
     }
 }

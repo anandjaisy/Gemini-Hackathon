@@ -22,6 +22,7 @@ public record QuestionController(IRepository<QuestionResponse, QuestionRequest, 
     }
 
     @Override
+    @Get("/{?criteria*}")
     public List<QuestionResponse> find(Optional<QuestionCriteria> criteria) {
         return iQuestionRepository.find(criteria);
     }
