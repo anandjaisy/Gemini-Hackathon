@@ -6,6 +6,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { AssessmentService } from '../assessment.service';
 import { AssessmentDto } from '../AssessmentDto';
 import { TableComponent } from '../../common/table/table.component';
+import { AuthorizationService } from '../../auth-callback/authorization.service';
+import { Role } from '../../common/utils';
 @Component({
   selector: 'app-assessment-list',
   standalone: true,
@@ -14,7 +16,8 @@ import { TableComponent } from '../../common/table/table.component';
   styleUrl: './assessment-list.component.scss',
 })
 export class AssessmentListComponent {
-  headers: string[] = ['Name', 'Course', 'Due Date', 'Action'];
+  permission: Promise<boolean> = Promise.resolve(false);
+  headers: string[] = ['Name', 'Course', 'Due Date'];
   assessmentData: AssessmentDto[] = [];
   private iDialogData: IDialogData = {} as IDialogData;
   headerToKeyMap: { [key: string]: string } = {
@@ -26,10 +29,22 @@ export class AssessmentListComponent {
     private assessmentService: AssessmentService,
     private router: Router,
     private dialog: MatDialog,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private authorizationService: AuthorizationService
   ) {}
   ngOnInit(): void {
     this.loadAssessment();
+    this.permission = this.permissionCheck();
+    this.permission.then((permission) => {
+      if (permission) this.headers.push('Action');
+    });
+  }
+
+  private async permissionCheck(): Promise<boolean> {
+    return await this.authorizationService.checkRoles([
+      Role.ADMIN,
+      Role.TEACHER,
+    ]);
   }
 
   editEmitterAction(event: string): void {

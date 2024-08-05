@@ -15,3 +15,9 @@ export abstract class AHttpOperation {
   abstract put<T>(id: string, model: T): Observable<any>;
   abstract delete(id: string): Observable<any>;
 }
+
+export enum Role {
+  TEACHER = 'teacher',
+  STUDENT = 'student',
+  ADMIN = 'admin',
+}

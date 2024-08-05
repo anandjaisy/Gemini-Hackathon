@@ -1,4 +1,9 @@
-import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ViewChild,
+} from '@angular/core';
 import {
   ActivatedRoute,
   NavigationEnd,
@@ -43,6 +48,7 @@ import { AuthService } from '@falcon-ng/tailwind';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   host: { '[style.--mat-sidenav-container-shape]': '"0px"' },
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
   title = 'Fetebird Ai';

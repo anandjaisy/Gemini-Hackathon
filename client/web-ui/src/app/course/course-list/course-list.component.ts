@@ -6,6 +6,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { CourseDto } from '../courseDto';
 import { CourseService } from '../course.service';
 import { TableComponent } from '../../common/table/table.component';
+import { AuthorizationService } from '../../auth-callback/authorization.service';
+import { Role } from '../../common/utils';
 
 @Component({
   selector: 'app-course-list',
@@ -15,7 +17,8 @@ import { TableComponent } from '../../common/table/table.component';
   styleUrl: './course-list.component.scss',
 })
 export class CourseListComponent implements OnInit {
-  headers: string[] = ['Name', 'Description', 'Action'];
+  permission: Promise<boolean> = Promise.resolve(false);
+  headers: string[] = ['Name', 'Description'];
   dataSource: CourseDto[] = [];
   private iDialogData: IDialogData = {} as IDialogData;
   headerToKeyMap: { [key: string]: string } = {
@@ -26,10 +29,22 @@ export class CourseListComponent implements OnInit {
     private courseUpsertService: CourseService,
     private router: Router,
     private dialog: MatDialog,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private authorizationService: AuthorizationService
   ) {}
   ngOnInit(): void {
     this.loadCourses();
+    this.permission = this.permissionCheck();
+    this.permission.then((permission) => {
+      if (permission) this.headers.push('Action');
+    });
+  }
+
+  private async permissionCheck(): Promise<boolean> {
+    return await this.authorizationService.checkRoles([
+      Role.ADMIN,
+      Role.TEACHER,
+    ]);
   }
 
   editEmitterAction(event: string): void {

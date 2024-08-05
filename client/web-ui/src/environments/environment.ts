@@ -3,7 +3,7 @@ import { EnvironmentViewModel } from '@falcon-ng/tailwind';
 class EnvironmentImpl implements EnvironmentViewModel {
   production = false;
   openID = {
-    authority: 'http://127.0.0.1:5001/auth/realms/fetebird',
+    authority: 'http://127.0.0.1:5001/auth/realms/FeteBird',
     client_id: 'fetebird_ai',
     redirect_uri: 'http://localhost:4200/auth-callback',
     silent_redirect_uri: 'http://localhost:4200/assets/silent-renew.html',

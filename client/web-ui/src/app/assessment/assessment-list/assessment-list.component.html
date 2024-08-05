@@ -13,7 +13,8 @@
             </div>
 
             <app-table [headers]="headers" [dataSource]="assessmentData" [headerToKeyMap]="headerToKeyMap"
-                (editEmitterAction)="editEmitterAction($event)" (deleteEmitterAction)="deleteEmitterAction($event)" />
+                [permission]="permission | async" (editEmitterAction)="editEmitterAction($event)"
+                (deleteEmitterAction)="deleteEmitterAction($event)" />
 
         </div>
     </fal-card>

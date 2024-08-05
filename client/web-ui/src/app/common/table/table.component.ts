@@ -12,6 +12,8 @@ export class TableComponent {
   @Input({ required: true }) headers: string[] = [];
   @Input({ required: false }) dataSource: any[] = [];
   @Input({ required: true }) headerToKeyMap: any = {};
+  @Input({ required: false }) permission: boolean | null = false;
+
   @Output() editEmitterAction = new EventEmitter<string>();
   @Output() deleteEmitterAction = new EventEmitter<string>();
 

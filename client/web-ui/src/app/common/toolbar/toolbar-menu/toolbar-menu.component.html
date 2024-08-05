@@ -3,10 +3,13 @@
     <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
       <!-- This is the tree node template for leaf nodes -->
       <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+        @if(node.permission){
         <a mat-list-item matTreeNodeToggle [routerLink]="[node.link]"><span class="font-thin">{{node.name}}</span></a>
+        }
       </mat-tree-node>
       <!-- This is the tree node template for expandable nodes -->
       <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+        @if(node.permission){
         <a mat-list-item matTreeNodeToggle [routerLink]="['/', node.link]">
           <div class="flex gap-2">
             <mat-icon>
@@ -15,6 +18,7 @@
             <span class="font-thin">{{node.name}}</span>
           </div>
         </a>
+        }
       </mat-tree-node>
     </mat-tree>
   </mat-nav-list>

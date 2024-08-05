@@ -9,25 +9,16 @@ import {
   MatTreeModule,
 } from '@angular/material/tree';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { AuthorizationService } from '../../../auth-callback/authorization.service';
+import { Role } from '../../utils';
+import { CommonModule } from '@angular/common';
 
 interface NavigationNode {
   name: string;
   link: string;
   children?: NavigationNode[];
+  permission: boolean;
 }
-
-const TREE_DATA: NavigationNode[] = [
-  {
-    name: 'Course',
-    link: 'course',
-    children: [{ name: 'Enrolment', link: 'course/enrolment' }],
-  },
-  {
-    name: 'Assessment',
-    link: 'assessment',
-    children: [{ name: 'Question', link: 'assessment/question' }],
-  },
-];
 
 /** Flat node with expandable and level information */
 interface ExampleFlatNode {
@@ -35,6 +26,8 @@ interface ExampleFlatNode {
   name: string;
   level: number;
   link: string;
+  permission: boolean;
+  children?: NavigationNode[];
 }
 
 @Component({
@@ -46,17 +39,20 @@ interface ExampleFlatNode {
     MatIconModule,
     MatTreeModule,
     MatButtonModule,
+    CommonModule,
   ],
   templateUrl: './toolbar-menu.component.html',
   styleUrl: './toolbar-menu.component.scss',
 })
 export class ToolbarMenuComponent {
+  TREE_DATA: NavigationNode[] = [];
   private _transformer = (node: NavigationNode, level: number) => {
     return {
       expandable: !!node.children && node.children.length > 0,
       name: node.name,
       level: level,
       link: node.link,
+      permission: node.permission,
     };
   };
 
@@ -74,14 +70,53 @@ export class ToolbarMenuComponent {
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-  constructor(public route: ActivatedRoute, router: Router) {
-    this.dataSource.data = TREE_DATA;
+  constructor(
+    public route: ActivatedRoute,
+    router: Router,
+    private authorizationService: AuthorizationService
+  ) {
+    this.initializeTreeData();
+  }
+
+  private async initializeTreeData(): Promise<void> {
+    this.TREE_DATA = [
+      {
+        name: 'Course',
+        link: 'course',
+        children: [
+          {
+            name: 'Enrolment',
+            link: 'course/enrolment',
+            permission: await this.authorizationService.checkRoles([
+              Role.ADMIN,
+            ]),
+          },
+        ],
+        permission: true,
+      },
+      {
+        name: 'Assessment',
+        link: 'assessment',
+        children: [
+          {
+            name: 'Question',
+            link: 'assessment/question',
+            permission: await this.authorizationService.checkRoles([
+              Role.ADMIN,
+              Role.TEACHER,
+            ]),
+          },
+        ],
+        permission: true,
+      },
+    ];
+    this.dataSource.data = this.TREE_DATA;
   }
 
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 
   getFullLink(node: NavigationNode): string[] {
-    const fullPath = this.buildPath(node, TREE_DATA, []);
+    const fullPath = this.buildPath(node, this.TREE_DATA, []);
     return fullPath;
   }
 
