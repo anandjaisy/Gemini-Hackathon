@@ -14,15 +14,19 @@ export class TableComponent {
   @Input({ required: true }) headerToKeyMap: any = {};
   @Input({ required: false }) permission: boolean | null = false;
 
+  @Output() viewEmitterAction = new EventEmitter<string>();
   @Output() editEmitterAction = new EventEmitter<string>();
   @Output() deleteEmitterAction = new EventEmitter<string>();
 
   tableAction(action: number, id: string) {
     switch (action) {
       case 0:
-        this.editEmitterAction.emit(id);
+        this.viewEmitterAction.emit(id);
         break;
       case 1:
+        this.editEmitterAction.emit(id);
+        break;
+      case 2:
         this.deleteEmitterAction.emit(id);
         break;
     }

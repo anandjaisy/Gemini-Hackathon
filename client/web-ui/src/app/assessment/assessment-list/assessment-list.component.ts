@@ -17,6 +17,7 @@ import { Role } from '../../common/utils';
 })
 export class AssessmentListComponent {
   permission: Promise<boolean> = Promise.resolve(false);
+  addPermission: Promise<boolean> = Promise.resolve(false);
   headers: string[] = ['Name', 'Course', 'Due Date'];
   assessmentData: AssessmentDto[] = [];
   private iDialogData: IDialogData = {} as IDialogData;
@@ -35,16 +36,29 @@ export class AssessmentListComponent {
   ngOnInit(): void {
     this.loadAssessment();
     this.permission = this.permissionCheck();
+    this.addPermission = this.addPermissionCheck();
     this.permission.then((permission) => {
       if (permission) this.headers.push('Action');
     });
+  }
+
+  private async addPermissionCheck(): Promise<boolean> {
+    return await this.authorizationService.checkRoles([
+      Role.ADMIN,
+      Role.TEACHER,
+    ]);
   }
 
   private async permissionCheck(): Promise<boolean> {
     return await this.authorizationService.checkRoles([
       Role.ADMIN,
       Role.TEACHER,
+      Role.STUDENT,
     ]);
+  }
+
+  viewEmitterAction(event: string): void {
+    this.router.navigate([`./assessment/${event}/question`]);
   }
 
   editEmitterAction(event: string): void {

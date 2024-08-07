@@ -1,5 +1,6 @@
 package fete.bird.feature.studentAssessment;
 
+import fete.bird.feature.question.Question;
 import fete.bird.persistence.Root;
 import fete.bird.shared.Constants;
 import fete.bird.shared.DuplicateException;
@@ -48,7 +49,7 @@ public class StudentAssessmentRepository
         if (studentAssessmentData.values().stream().anyMatch(x -> (x.studentId().equals(request.studentId()) && x.questionId().equals(request.questionId()))))
             throw new DuplicateException(String.format("%s %s",request.studentId(), "already exists !"));
         var assessment = requestStudentAssessmentMapper.apply(Optional.empty(),request);
-        this.save(assessment);
+        this.save(this.studentAssessmentData,assessment);
         return Optional.of(studentAssessmentResponseMapper.apply(assessment));
     }
 
@@ -58,22 +59,24 @@ public class StudentAssessmentRepository
         if (studentAssessment == null)
             throw new NotFoundException(Constants.NO_Record_Found);
         var updateAssessment =  requestStudentAssessmentMapper.apply(Optional.of(studentAssessment.id()),request);
-        save(updateAssessment);
+        save(this.studentAssessmentData,updateAssessment);
         return Optional.of(studentAssessmentResponseMapper.apply(updateAssessment));
     }
 
     @Override
     public void delete(UUID id) {
-        deleteCourseById(id);
+        deleteById(this.studentAssessmentData,id);
     }
-    @StoreParams("Course")
-    protected void save(@NonNull StudentAssessment question) {
-        studentAssessmentData.put(question.id(), question);
+
+    @StoreParams("studentAssessment")
+    protected void save(Map<UUID, StudentAssessment> studentAssessment, @NonNull StudentAssessment request) {
+        studentAssessment.put(request.id(), request);
     }
-    @StoreParams("Course")
-    protected void deleteCourseById(@NonNull UUID id) {
-        if (studentAssessmentData.get(id) == null)
+
+    @StoreParams("studentAssessment")
+    protected void deleteById(Map<UUID, StudentAssessment> studentAssessment, @NonNull UUID id) {
+        if (studentAssessment.get(id) == null)
             throw new NotFoundException(Constants.NO_Record_Found);
-        studentAssessmentData.remove(id);
+        studentAssessment.remove(id);
     }
 }

@@ -97,16 +97,6 @@ export class ToolbarMenuComponent {
       {
         name: 'Assessment',
         link: 'assessment',
-        children: [
-          {
-            name: 'Question',
-            link: 'assessment/question',
-            permission: await this.authorizationService.checkRoles([
-              Role.ADMIN,
-              Role.TEACHER,
-            ]),
-          },
-        ],
         permission: true,
       },
     ];

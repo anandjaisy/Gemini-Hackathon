@@ -8,13 +8,15 @@
                         and due date</p>
                 </div>
                 <div>
+                    @if(addPermission | async){
                     <a mat-flat-button routerLink="./new" routerLinkActive="active">Add assessment</a>
+                    }
                 </div>
             </div>
 
             <app-table [headers]="headers" [dataSource]="assessmentData" [headerToKeyMap]="headerToKeyMap"
-                [permission]="permission | async" (editEmitterAction)="editEmitterAction($event)"
-                (deleteEmitterAction)="deleteEmitterAction($event)" />
+                [permission]="permission | async" (viewEmitterAction)="viewEmitterAction($event)"
+                (editEmitterAction)="editEmitterAction($event)" (deleteEmitterAction)="deleteEmitterAction($event)" />
 
         </div>
     </fal-card>

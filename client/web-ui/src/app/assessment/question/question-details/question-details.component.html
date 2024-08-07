@@ -7,6 +7,7 @@
                 <span class="text-slate-700 font-thin text-sm">Created date : {{question?.createdDate | date }}</span>
             </div>
             <div>
+                @if(!(studentPermission | async)){
                 <button class="bg-slate-500" mat-icon-button [matMenuTriggerFor]="menu"
                     aria-label="Example icon-button with a menu">
                     <mat-icon class="text-slate-400 hover:text-black">more_vert</mat-icon>
@@ -21,6 +22,7 @@
                         <span class="font-thin">Delete</span>
                     </button>
                 </mat-menu>
+                }
             </div>
         </div>
         <div class="flex flex-col gap-5 mt-5">
@@ -32,6 +34,7 @@
                 <p class="inline-block align-middle text-slate-600 font-thin text-sm text-slate-400">
                     {{question?.question}}</p>
             </div>
+            @if(!(studentPermission | async)){
             <div class="flex justify-start gap-5">
                 <button mat-mini-fab aria-label="Example icon button with a menu icon" class="text-lg font-thin">
                     A
@@ -39,7 +42,24 @@
                 <p class="inline-block align-middle text-slate-600 font-thin text-sm text-slate-400">
                     {{question?.answer}}</p>
             </div>
+            }@else {
+            <div class="flex flex-col">
+                <form [formGroup]="form" (ngSubmit)="onSubmit(form)">
+                    <div>
+                        <falcon-control [control]="studentAnswer" />
+                    </div>
+                    <div class="flex justify-end">
+                        <button type="submit" mat-stroked-button>Submit</button>
+                    </div>
+                </form>
+            </div>
+            }
         </div>
+        @if(!(studentPermission | async)){
+        <div class="flex justify-end">
+            <a mat-stroked-button href="https://www.google.com/" target="_blank">Students</a>
+        </div>
+        }
         }
     </fal-card>
 </div>

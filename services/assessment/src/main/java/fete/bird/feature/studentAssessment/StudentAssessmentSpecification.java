@@ -16,6 +16,6 @@ public class StudentAssessmentSpecification implements Predicate<StudentAssessme
     }
     @Override
     public boolean test(StudentAssessment studentAssessment) {
-        return false;
+        return true;
     }
 }

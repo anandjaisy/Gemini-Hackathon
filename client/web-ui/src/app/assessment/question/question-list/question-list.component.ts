@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import {
   BaseControl,
   FalconCoreModule,
@@ -13,11 +13,12 @@ import {
 } from '@falcon-ng/core';
 import { AssessmentService } from '../../assessment.service';
 import { AssessmentDto } from '../../AssessmentDto';
-import { transformToKeyValuePair } from '../../../common/utils';
+import { Role, transformToKeyValuePair } from '../../../common/utils';
 import { QuestionService } from '../question.service';
 import { combineLatest } from 'rxjs';
 import { QuestionDto } from '../QuestionDto';
 import { CommonModule } from '@angular/common';
+import { AuthorizationService } from '../../../auth-callback/authorization.service';
 
 @Component({
   selector: 'app-question-list',
@@ -36,6 +37,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './question-list.component.scss',
 })
 export class QuestionListComponent {
+  permission: Promise<boolean> = Promise.resolve(false);
   questionList: QuestionDto[] = [];
   changeEvent: IComponentEvent<string> = { change: new EventEmitter<string>() };
   select: BaseControl<string> = new Select({
@@ -45,18 +47,32 @@ export class QuestionListComponent {
     event: this.changeEvent,
   });
   form: FormGroup;
+  courseName: string | undefined = undefined;
+  private id: string | undefined = undefined;
   constructor(
     private assessmentService: AssessmentService,
     private questionService: QuestionService,
+    private route: ActivatedRoute,
+    private authorizationService: AuthorizationService,
     private cdr: ChangeDetectorRef
   ) {
     this.form = new FormGroup({});
   }
   ngOnInit(): void {
+    this.permission = this.permissionCheck();
+    this.id = this.route.parent?.parent?.snapshot.params['id'];
+    this.select.value = this.id;
     this.changeEvent.change?.subscribe((event: any) =>
       this.loadQuestionForAssessment(event.value)
     );
     this.loadAssessmentQuestion();
+  }
+
+  private async permissionCheck(): Promise<boolean> {
+    return await this.authorizationService.checkRoles([
+      Role.ADMIN,
+      Role.TEACHER,
+    ]);
   }
 
   private loadQuestionForAssessment(id: string): void {
@@ -73,6 +89,9 @@ export class QuestionListComponent {
     ]).subscribe(([assessments, questions]) => {
       this.select.options = transformToKeyValuePair(assessments);
       this.questionList = questions;
+      this.courseName = (assessments as AssessmentDto[]).find(
+        (x) => x.id == this.id
+      )?.course.name;
       this.cdr.detectChanges();
     });
   }

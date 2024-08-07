@@ -3,6 +3,8 @@ package fete.bird.feature.assessment;
 import fete.bird.shared.IController;
 import fete.bird.shared.IRepository;
 import io.micronaut.http.annotation.*;
+import io.micronaut.scheduling.TaskExecutors;
+import io.micronaut.scheduling.annotation.ExecuteOn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
@@ -13,6 +15,7 @@ import java.util.UUID;
 @ApiResponse(responseCode = "400", description = "Bad request, invalid data")
 @ApiResponse(responseCode = "404", description = "Course not found")
 @Tag(name = "Assessment")
+@ExecuteOn(TaskExecutors.BLOCKING)
 public record AssessmentController(IRepository<AssessmentResponse, AssessmentRequest, AssessmentCriteria> iAssessmentRepository) implements IController<AssessmentResponse, AssessmentRequest, AssessmentCriteria> {
     @Override
     public Optional<AssessmentResponse> get(UUID id) {

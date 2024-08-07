@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from '@falcon-ng/tailwind';
 import { Role } from '../common/utils';
+import { KeycloakUser } from './keycloakuser.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -16,5 +17,17 @@ export class AuthorizationService {
       return permission;
     }
     return true;
+  }
+
+  public getUserDetails(): KeycloakUser {
+    if (this.authService.isLoggedIn()) {
+      const user = this.authService.getProfile();
+      return {
+        id: user.sub,
+        lastName: user.family_name,
+        firstName: user.name,
+      } as KeycloakUser;
+    }
+    return {} as KeycloakUser;
   }
 }

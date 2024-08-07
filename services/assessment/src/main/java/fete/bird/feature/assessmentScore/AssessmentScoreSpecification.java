@@ -1,8 +1,6 @@
 package fete.bird.feature.assessmentScore;
 
-import fete.bird.feature.question.QuestionCriteria;
 import jakarta.inject.Singleton;
-
 import java.util.Optional;
 import java.util.function.Predicate;
 
@@ -18,6 +16,6 @@ public class AssessmentScoreSpecification implements Predicate<AssessmentScore> 
     }
     @Override
     public boolean test(AssessmentScore assessmentScore) {
-        return false;
+        return true;
     }
 }

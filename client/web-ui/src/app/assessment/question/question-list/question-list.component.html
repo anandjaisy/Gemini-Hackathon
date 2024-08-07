@@ -6,7 +6,8 @@
         <div><a mat-flat-button routerLink="./new" routerLinkActive="active">Add question</a></div>
     </div>
     <div class="flex flex-col gap-2 my-2">
-        <div class="flex justify-end">
+        <div class="flex justify-between">
+            <span class="text-slate-500 font-thin text-sm">Course: {{courseName }}</span>
             <span class="text-slate-500 font-thin text-sm">Matched: {{questionList.length }}</span>
         </div>
         @for (question of questionList; track question.id) {
@@ -20,6 +21,7 @@
                             | date }}</span>
                     </div>
                     <div (click)="$event.stopPropagation()">
+                        @if(permission | async){
                         <button class="bg-slate-500" mat-icon-button [matMenuTriggerFor]="menu"
                             aria-label="Example icon-button with a menu">
                             <mat-icon class="text-slate-400 hover:text-black">more_vert</mat-icon>
@@ -34,6 +36,8 @@
                                 <span class="font-thin">Delete</span>
                             </button>
                         </mat-menu>
+                        }
+
                     </div>
                 </div>
                 <p class="text-slate-600 font-thin text-sm text-slate-400">{{question?.question}}</p>
