@@ -9,11 +9,11 @@ export function transformToKeyValuePair<T>(array: any[]): IOptions[] {
 }
 
 export abstract class AHttpOperation {
-  abstract find<T>(params?: T): Observable<any>;
-  abstract get(id: string): Observable<any>;
-  abstract post<T>(model: T): Observable<any>;
-  abstract put<T>(id: string, model: T): Observable<any>;
-  abstract delete(id: string): Observable<any>;
+  public abstract find<T>(params?: T): Observable<any>;
+  public abstract get(id: string): Observable<any>;
+  public abstract post<T>(model: T): Observable<any>;
+  public abstract put<T>(id: string, model: T): Observable<any>;
+  public abstract delete(id: string): Observable<any>;
 }
 
 export enum Role {

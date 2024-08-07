@@ -17,6 +17,6 @@ public class EnrolmentSpecification implements Predicate<Enrolment> {
     }
     @Override
     public boolean test(Enrolment professorEnrolment) {
-        return false;
+        return true;
     }
 }

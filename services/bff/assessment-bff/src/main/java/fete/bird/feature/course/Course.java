@@ -1,4 +1,4 @@
-package fete.bird;
+package fete.bird.feature.course;
 
 import io.micronaut.serde.annotation.Serdeable;
 

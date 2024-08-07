@@ -6,4 +6,4 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Serdeable
-public record EnrolmentRequest(Optional<UUID> id, UUID courseId, Optional<UUID> professorId, Optional<UUID> studentId) { }
+public record EnrolmentRequest(UUID courseId, UUID professorId, UUID studentId) { }

@@ -22,6 +22,29 @@ spring:
             ${COURSE_SERVICE_URL:http://localhost:8081}
           predicates:
             - Path=/course/**, /swagger/**
+        - id: enrolment-service-get
+          uri:
+            ${COURSE_SERVICE_URL:http://localhost:8083}
+          predicates:
+            - Path=/enrolment
+            - Method=GET,OPTIONS
+          filters:
+            - RewritePath=/enrolment, /bff/enrolment
+
+        - id: enrolment-service-get-with-parameter
+          uri:
+            ${COURSE_SERVICE_URL:http://localhost:8081}
+          predicates:
+            - Path=/enrolment/**
+            - Method=GET,OPTIONS
+
+        - id: enrolment-service-post-put-delete
+          uri:
+            ${COURSE_SERVICE_URL:http://localhost:8081}
+          predicates:
+            - Path=/enrolment/**, /swagger/**
+            - Method=POST,PUT,PATCH,DELETE,OPTIONS
+
         - id: assessment-service-question-get
           uri:
             ${ASSESSMENT_SERVICE_URL:http://localhost:8082}

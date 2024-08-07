@@ -9,7 +9,6 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.eclipsestore.RootProvider;
 import io.micronaut.eclipsestore.annotations.StoreParams;
 import jakarta.inject.Singleton;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -50,9 +49,9 @@ public class EnrolmentRepository implements IRepository<EnrolmentResponse, Enrol
         if (enrolmentData.values().stream()
                 .anyMatch(x -> (x.studentId().equals(request.studentId()) || (x.professorId().equals(request.professorId())))
                         && x.courseId().equals(request.courseId())))
-            throw new DuplicateException(request.professorId().isPresent() ? request.professorId().get().toString() : request.studentId().get().toString());
-        var enrolment = requestToProfessorMapper.apply(request);
-        this.save(enrolment);
+            throw new DuplicateException(request.professorId().toString() + request.studentId().toString());
+        var enrolment = requestToProfessorMapper.apply(Optional.empty(),request);
+        this.save(this.enrolmentData,enrolment);
         return Optional.of(enrolmentToResponseMapper.apply(enrolment));
     }
 
@@ -62,24 +61,24 @@ public class EnrolmentRepository implements IRepository<EnrolmentResponse, Enrol
         if (enrolment == null)
             throw new NotFoundException(Constants.NO_Record_Found);
         var updateCourse = new Enrolment(enrolment.id(), request.courseId(), request.professorId(), request.studentId());
-        save(updateCourse);
+        save(this.enrolmentData,updateCourse);
         return Optional.of(this.enrolmentToResponseMapper.apply(updateCourse));
     }
 
     @Override
     public void delete(UUID id) {
-        deleteCourseById(id);
+        deleteEnrolmentById(this.enrolmentData, id);
     }
 
-    @StoreParams("Course")
-    protected void deleteCourseById(@NonNull UUID id) {
-        if (enrolmentData.get(id) == null)
+    @StoreParams("enrolment")
+    protected void save(Map<UUID, Enrolment> enrolment, @NonNull Enrolment request) {
+        enrolment.put(request.id(), request);
+    }
+
+    @StoreParams("enrolment")
+    protected void deleteEnrolmentById(Map<UUID, Enrolment> enrolment, @NonNull UUID id) {
+        if (enrolment.get(id) == null)
             throw new NotFoundException(Constants.NO_Record_Found);
-        enrolmentData.remove(id);
-    }
-
-    @StoreParams("Course")
-    protected void save(@NonNull Enrolment enrolment) {
-        enrolmentData.put(enrolment.id(), enrolment);
+        enrolment.remove(id);
     }
 }

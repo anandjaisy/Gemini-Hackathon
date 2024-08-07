@@ -1,6 +1,6 @@
 package fete.bird.feature.assessment;
 
-import fete.bird.Course;
+import fete.bird.feature.course.Course;
 import io.micronaut.core.type.Argument;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;

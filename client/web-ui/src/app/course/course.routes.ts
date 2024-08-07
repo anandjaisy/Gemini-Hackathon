@@ -10,7 +10,8 @@ export const courseRoutes: Routes = [
   },
   {
     path: 'enrolment',
-    component: EnrolmentComponent,
+    loadChildren: () =>
+      import('./enrolment/enrolment.routes').then((x) => x.enrolmentRoutes),
   },
   {
     path: ':id',

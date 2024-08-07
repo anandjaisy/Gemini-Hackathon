@@ -10,7 +10,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { FalconTailwindModule } from '@falcon-ng/tailwind';
 import { FalconCoreModule } from '@falcon-ng/core';
-import { provideHttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
+import { AuthInterceptorService } from './common/auth-interceptor.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,6 +21,12 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     importProvidersFrom(FalconCoreModule),
     importProvidersFrom(FalconTailwindModule.forRoot(environment)),
-    provideHttpClient(), provideAnimationsAsync(),
+    provideHttpClient(),
+    provideAnimationsAsync(),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true,
+    },
   ],
 };
