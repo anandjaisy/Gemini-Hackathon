@@ -1,7 +1,9 @@
 import { Routes } from '@angular/router';
-import { QuestionDetailsComponent } from './question-details/question-details.component';
+import { QuestionDetailsComponent } from './question-details-router/question-details/question-details.component';
 import { QuestionListComponent } from './question-list/question-list.component';
 import { QuestionUpsertComponent } from './question-upsert/question-upsert.component';
+import { StudentAssessmentComponent } from '../student-assessment/student-assessment.component';
+import { QuestionDetailsRouterComponent } from './question-details-router/question-details-router.component';
 
 export const questionRoutes: Routes = [
   {
@@ -13,7 +15,17 @@ export const questionRoutes: Routes = [
     children: [
       {
         path: ':id',
-        component: QuestionDetailsComponent,
+        component: QuestionDetailsRouterComponent,
+        children: [
+          {
+            path: '',
+            component: QuestionDetailsComponent,
+          },
+          {
+            path: 'students',
+            component: StudentAssessmentComponent,
+          },
+        ],
       },
     ],
   },

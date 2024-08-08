@@ -7,18 +7,18 @@ import {
   IDialogData,
   Textarea,
 } from '@falcon-ng/core';
-import { QuestionService } from '../question.service';
+import { QuestionService } from '../../question.service';
 import { of, Observable } from 'rxjs';
-import { QuestionDto } from '../QuestionDto';
-import { ActivatedRoute, Router } from '@angular/router';
+import { QuestionDto } from '../../QuestionDto';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '@falcon-ng/tailwind';
-import { AuthorizationService } from '../../../auth-callback/authorization.service';
-import { Role } from '../../../common/utils';
+import { AuthorizationService } from '../../../../auth-callback/authorization.service';
+import { Role } from '../../../../common/utils';
 import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { StudentAssessmentDto } from '../../student-assessment.dto';
-import { StudentAssessmentService } from '../../student-assessment.service';
+import { StudentAssessmentDto } from '../../../student-assessment/student-assessment.dto';
+import { StudentAssessmentService } from '../../../student-assessment/student-assessment.service';
 
 @Component({
   selector: 'app-question-details',
@@ -29,6 +29,7 @@ import { StudentAssessmentService } from '../../student-assessment.service';
     MatIconModule,
     CommonModule,
     ReactiveFormsModule,
+    RouterModule,
   ],
   templateUrl: './question-details.component.html',
   styleUrl: './question-details.component.scss',
@@ -132,10 +133,8 @@ export class QuestionDetailsComponent implements OnInit {
       questionId: this.questionId,
       answer: form.value.answer,
     } as StudentAssessmentDto;
-    this.studentAssessmentService
-      .post(studentAssessment)
-      .subscribe((status) => {
-        this.router.navigate(['./assessment']);
-      });
+    this.studentAssessmentService.post(studentAssessment).subscribe(() => {
+      this.router.navigate(['./assessment']);
+    });
   }
 }

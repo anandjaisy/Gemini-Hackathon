@@ -7,7 +7,7 @@
         <option name="micronaut.processing.annotations" value="fete.bird.*" />
         <option name="micronaut.processing.group" value="fete.bird" />
         <option name="micronaut.processing.incremental" value="true" />
-        <option name="micronaut.processing.module" value="assessment" />
+        <option name="micronaut.processing.module" value="course" />
         <processorPath useClasspath="false">
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.micronaut.eclipsestore/micronaut-eclipsestore-annotations/1.5.0/4db283c04cf520a34f9cef1571f2749d1f0de6aa/micronaut-eclipsestore-annotations-1.5.0.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.micronaut.openapi/micronaut-openapi/6.11.1/4ddadb228da5c36cf3e8f0dd1ec66b4b0a047284/micronaut-openapi-6.11.1.jar" />
@@ -74,14 +74,14 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.vladsch.flexmark/flexmark-util-visitor/0.64.8/a8178ba6dfd7a958353a60b3a51fe7edb1578b49/flexmark-util-visitor-0.64.8.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.javaparser/javaparser-core/3.25.10/ed2d4a9c601507713cf2f6208df4c844fe6447b2/javaparser-core-3.25.10.jar" />
         </processorPath>
-        <module name="assessment.main" />
+        <module name="course.main" />
       </profile>
       <profile name="Gradle Imported" enabled="true">
         <outputRelativeToContentRoot value="true" />
         <option name="micronaut.processing.annotations" value="fete.bird.*" />
         <option name="micronaut.processing.group" value="fete.bird" />
         <option name="micronaut.processing.incremental" value="true" />
-        <option name="micronaut.processing.module" value="assessment" />
+        <option name="micronaut.processing.module" value="course" />
         <processorPath useClasspath="false">
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.micronaut.openapi/micronaut-openapi/6.11.1/4ddadb228da5c36cf3e8f0dd1ec66b4b0a047284/micronaut-openapi-6.11.1.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.micronaut.serde/micronaut-serde-processor/2.10.2/535334f43122a80033d60f2c537a42c9c25aa96/micronaut-serde-processor-2.10.2.jar" />
@@ -141,7 +141,7 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.vladsch.flexmark/flexmark-util-visitor/0.64.8/a8178ba6dfd7a958353a60b3a51fe7edb1578b49/flexmark-util-visitor-0.64.8.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.javaparser/javaparser-core/3.25.10/ed2d4a9c601507713cf2f6208df4c844fe6447b2/javaparser-core-3.25.10.jar" />
         </processorPath>
-        <module name="assessment.test" />
+        <module name="course.test" />
       </profile>
     </annotationProcessing>
   </component>

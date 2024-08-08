@@ -1,8 +1,5 @@
 package fete.bird.feature.studentAssessment;
 
-import fete.bird.feature.question.QuestionCriteria;
-import fete.bird.feature.question.QuestionRequest;
-import fete.bird.feature.question.QuestionResponse;
 import fete.bird.persistence.Root;
 import fete.bird.shared.Constants;
 import fete.bird.shared.DuplicateException;
