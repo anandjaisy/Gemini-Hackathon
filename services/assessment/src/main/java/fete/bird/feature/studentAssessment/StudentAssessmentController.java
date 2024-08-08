@@ -1,5 +1,8 @@
 package fete.bird.feature.studentAssessment;
 
+import fete.bird.feature.question.QuestionCriteria;
+import fete.bird.feature.question.QuestionRequest;
+import fete.bird.feature.question.QuestionResponse;
 import fete.bird.shared.IController;
 import fete.bird.shared.IRepository;
 import io.micronaut.http.annotation.Controller;
@@ -17,7 +20,8 @@ import java.util.UUID;
 @ApiResponse(responseCode = "404", description = "Course not found")
 @Tag(name = "Assessment")
 @ExecuteOn(TaskExecutors.BLOCKING)
-public record StudentAssessmentController(IRepository<StudentAssessmentResponse, StudentAssessmentRequest, StudentAssessmentCriteria> iRepository)
+public record StudentAssessmentController(IRepository<StudentAssessmentResponse, StudentAssessmentRequest, StudentAssessmentCriteria> iRepository,
+                                          IRepository<QuestionResponse, QuestionRequest, QuestionCriteria> questionRepository)
         implements IController<StudentAssessmentResponse, StudentAssessmentRequest, StudentAssessmentCriteria> {
     @Override
     public Optional<StudentAssessmentResponse> get(UUID id) {
@@ -36,7 +40,9 @@ public record StudentAssessmentController(IRepository<StudentAssessmentResponse,
 
     @Override
     public Optional<StudentAssessmentResponse> update(UUID id, StudentAssessmentRequest request) {
-        return iRepository.update(id, request);
+        Optional<StudentAssessmentResponse> result = iRepository.update(id, request);
+        questionRepository.update(id,new QuestionRequest(null, null, null, Optional.of(true), Optional.of(false)));
+        return result;
     }
 
     @Override

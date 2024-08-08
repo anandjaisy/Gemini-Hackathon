@@ -13,7 +13,6 @@ import org.reactivestreams.Publisher;
 @Filter("/**")
 @Singleton
 public class JwtInterceptor implements HttpServerFilter {
-
     @Override
     public Publisher<MutableHttpResponse<?>> doFilter(HttpRequest<?> request, ServerFilterChain chain) {
         String authorization = request.getHeaders().get("authorization");

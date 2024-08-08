@@ -5,7 +5,8 @@ export interface QuestionDto {
   assessment: AssessmentDto;
   question: string;
   answer: string;
+  studentAnswer: string;
   createdDate: string;
-  isSubmitedByStudent: boolean;
+  isSubmittedByStudent: boolean;
   isMarkedByTeacher: boolean;
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import {
@@ -42,7 +42,7 @@ export class QuestionDetailsComponent implements OnInit {
   private questionId: string | undefined = undefined;
   question$: Observable<QuestionDto> = of();
   studentAnswer: BaseControl<string> = new Textarea({
-    formControlName: 'answer',
+    formControlName: 'studentAnswer',
     label: 'Type your assessment',
     textAreaProperty: { rows: 10 },
     validations: [
@@ -61,7 +61,8 @@ export class QuestionDetailsComponent implements OnInit {
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private authorizationService: AuthorizationService,
-    private studentAssessmentService: StudentAssessmentService
+    private studentAssessmentService: StudentAssessmentService,
+    private cdr: ChangeDetectorRef
   ) {
     this.form = new FormGroup({});
   }
@@ -72,6 +73,11 @@ export class QuestionDetailsComponent implements OnInit {
     this.permission = this.permissionCheck();
     this.studentPermission = this.studentPermissionCheck();
     this.loadQuestion();
+    this.question$.subscribe((question) => {
+      this.studentAnswer.value = question.studentAnswer;
+      this.studentAnswer.disabled = question.isSubmittedByStudent;
+      this.cdr.detectChanges();
+    });
   }
 
   private async studentPermissionCheck(): Promise<boolean> {
