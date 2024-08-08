@@ -1,4 +1,6 @@
 package fete.bird.feature.studentAssessment;
 
-public record StudentAssessmentCriteria() {
+import java.util.UUID;
+
+public record StudentAssessmentCriteria(UUID studentId, UUID questionId) {
 }

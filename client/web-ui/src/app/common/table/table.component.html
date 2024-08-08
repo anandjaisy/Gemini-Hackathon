@@ -19,12 +19,18 @@
                 @else {
                 @if(permission){
                 <td class="py-3 px-6 text-sm font-thin">
+                    @if(permission.viewPermission){
                     <a (click)="tableAction(0, data?.id)"
-                        class="text-indigo-600 hover:text-indigo-900 cursor-pointer hover:underline">View</a> |
-                    <a (click)="tableAction(1, data?.id)"
+                        class="text-indigo-600 hover:text-indigo-900 cursor-pointer hover:underline">View</a>
+                    }
+                    @if(permission.editPermission){
+                    | <a (click)="tableAction(1, data?.id)"
                         class="text-indigo-600 hover:text-indigo-900 cursor-pointer hover:underline">Edit</a> |
+                    }
+                    @if(permission.deletePermission){
                     <a (click)="tableAction(2, data?.id)"
                         class="text-indigo-600 hover:text-indigo-900 cursor-pointer hover:underline">Delete</a>
+                    }
                 </td>
                 }
                 }

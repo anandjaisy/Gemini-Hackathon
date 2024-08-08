@@ -1,5 +1,13 @@
 <div class="mx-5 my-5">
     <fal-card>
+        <div class="flex justify-end ...">
+            <div class="p-2 bg-gray-200 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex"
+                role="alert">
+                <span
+                    class="flex rounded-full bg-yellow-500 uppercase px-2 py-1 text-xs font-thin mr-3 text-slate-950">Info</span>
+                <span class="font-thin mr-2 text-left flex-auto text-slate-950">You have submitted the answer</span>
+            </div>
+        </div>
         @if(question$ | async; as question) {
         <div class="flex justify-between">
             <div class="flex flex-col">
@@ -49,7 +57,8 @@
                         <falcon-control [control]="studentAnswer" />
                     </div>
                     <div class="flex justify-end">
-                        <button type="submit" mat-stroked-button>Submit</button>
+                        <button type="submit" mat-stroked-button
+                            [disabled]="question?.isSubmitedByStudent">Submit</button>
                     </div>
                 </form>
             </div>

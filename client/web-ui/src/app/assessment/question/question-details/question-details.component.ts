@@ -38,6 +38,7 @@ export class QuestionDetailsComponent implements OnInit {
   permission: Promise<boolean> = Promise.resolve(false);
   private iDialogData: IDialogData = {} as IDialogData;
   private id: string = '';
+  private assessmentId: string = '';
   private questionId: string | undefined = undefined;
   question$: Observable<QuestionDto> = of();
   studentAnswer: BaseControl<string> = new Textarea({
@@ -66,6 +67,8 @@ export class QuestionDetailsComponent implements OnInit {
   }
   ngOnInit(): void {
     this.questionId = this.route.snapshot.params['id'];
+    this.assessmentId =
+      this.route.parent?.parent?.parent?.snapshot.params['id'];
     this.permission = this.permissionCheck();
     this.studentPermission = this.studentPermissionCheck();
     this.loadQuestion();
@@ -100,7 +103,11 @@ export class QuestionDetailsComponent implements OnInit {
         dialogRef.afterClosed().subscribe((result) => {
           this.questionService
             .delete(id)
-            .subscribe(() => this.router.navigate(['./assessment/question']));
+            .subscribe(() =>
+              this.router.navigate([
+                `./assessment/${this.assessmentId}/question`,
+              ])
+            );
         });
         break;
     }
@@ -121,6 +128,8 @@ export class QuestionDetailsComponent implements OnInit {
     } as StudentAssessmentDto;
     this.studentAssessmentService
       .post(studentAssessment)
-      .subscribe((status) => {});
+      .subscribe((status) => {
+        this.router.navigate(['./assessment']);
+      });
   }
 }

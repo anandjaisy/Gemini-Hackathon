@@ -45,6 +45,8 @@ interface ExampleFlatNode {
   styleUrl: './toolbar-menu.component.scss',
 })
 export class ToolbarMenuComponent {
+  isAdminOrTeacher: boolean = false;
+  isStudent: boolean = false;
   TREE_DATA: NavigationNode[] = [];
   private _transformer = (node: NavigationNode, level: number) => {
     return {
@@ -79,6 +81,12 @@ export class ToolbarMenuComponent {
   }
 
   private async initializeTreeData(): Promise<void> {
+    this.isAdminOrTeacher = await this.authorizationService.checkRoles([
+      Role.ADMIN,
+      Role.TEACHER,
+    ]);
+    this.isStudent = await this.authorizationService.checkRoles([Role.STUDENT]);
+
     this.TREE_DATA = [
       {
         name: 'Course',
@@ -87,17 +95,15 @@ export class ToolbarMenuComponent {
           {
             name: 'Enrolment',
             link: 'course/enrolment',
-            permission: await this.authorizationService.checkRoles([
-              Role.ADMIN,
-            ]),
+            permission: this.isAdminOrTeacher,
           },
         ],
-        permission: true,
+        permission: this.isAdminOrTeacher,
       },
       {
         name: 'Assessment',
         link: 'assessment',
-        permission: true,
+        permission: this.isAdminOrTeacher || this.isStudent,
       },
     ];
     this.dataSource.data = this.TREE_DATA;

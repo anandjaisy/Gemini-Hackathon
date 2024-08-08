@@ -7,7 +7,7 @@ import { AssessmentService } from '../assessment.service';
 import { AssessmentDto } from '../AssessmentDto';
 import { TableComponent } from '../../common/table/table.component';
 import { AuthorizationService } from '../../auth-callback/authorization.service';
-import { Role } from '../../common/utils';
+import { Permission, Role } from '../../common/utils';
 @Component({
   selector: 'app-assessment-list',
   standalone: true,
@@ -16,9 +16,8 @@ import { Role } from '../../common/utils';
   styleUrl: './assessment-list.component.scss',
 })
 export class AssessmentListComponent {
-  permission: Promise<boolean> = Promise.resolve(false);
-  addPermission: Promise<boolean> = Promise.resolve(false);
-  headers: string[] = ['Name', 'Course', 'Due Date'];
+  permission: Promise<Permission> = Promise.resolve({} as Permission);
+  headers: string[] = ['Name', 'Course', 'Due Date', 'Action'];
   assessmentData: AssessmentDto[] = [];
   private iDialogData: IDialogData = {} as IDialogData;
   headerToKeyMap: { [key: string]: string } = {
@@ -36,25 +35,19 @@ export class AssessmentListComponent {
   ngOnInit(): void {
     this.loadAssessment();
     this.permission = this.permissionCheck();
-    this.addPermission = this.addPermissionCheck();
-    this.permission.then((permission) => {
-      if (permission) this.headers.push('Action');
-    });
   }
 
-  private async addPermissionCheck(): Promise<boolean> {
-    return await this.authorizationService.checkRoles([
+  private async permissionCheck(): Promise<Permission> {
+    const adminTeacher = await this.authorizationService.checkRoles([
       Role.ADMIN,
       Role.TEACHER,
     ]);
-  }
-
-  private async permissionCheck(): Promise<boolean> {
-    return await this.authorizationService.checkRoles([
-      Role.ADMIN,
-      Role.TEACHER,
-      Role.STUDENT,
-    ]);
+    const student = await this.authorizationService.checkRoles([Role.STUDENT]);
+    return {
+      viewPermission: adminTeacher || student,
+      editPermission: adminTeacher,
+      deletePermission: adminTeacher,
+    } as Permission;
   }
 
   viewEmitterAction(event: string): void {

@@ -5,7 +5,7 @@ import { DialogComponent, FalconTailwindModule } from '@falcon-ng/tailwind';
 import { TableComponent } from '../../common/table/table.component';
 import { EnrolmentService } from './enrolment.service';
 import { EnrolmentDto } from './enrolment.dto';
-import { Role } from '../../common/utils';
+import { Permission, Role } from '../../common/utils';
 import { AuthorizationService } from '../../auth-callback/authorization.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -19,7 +19,7 @@ import { Router } from '@angular/router';
 })
 export class EnrolmentComponent implements OnInit {
   private iDialogData: IDialogData = {} as IDialogData;
-  permission: Promise<boolean> = Promise.resolve(false);
+  permission: Promise<Permission> = Promise.resolve({} as Permission);
   constructor(
     private enrolmentService: EnrolmentService,
     private dialog: MatDialog,
@@ -44,11 +44,22 @@ export class EnrolmentComponent implements OnInit {
     this.loadEnrolments();
   }
 
-  private async permissionCheck(): Promise<boolean> {
-    return await this.authorizationService.checkRoles([
+  private async permissionCheck(): Promise<Permission> {
+    const adminTeacher = await this.authorizationService.checkRoles([
       Role.ADMIN,
       Role.TEACHER,
+      Role.STUDENT,
     ]);
+    const student = await this.authorizationService.checkRoles([
+      Role.ADMIN,
+      Role.TEACHER,
+      Role.STUDENT,
+    ]);
+    return {
+      viewPermission: adminTeacher || student,
+      editPermission: adminTeacher,
+      deletePermission: adminTeacher,
+    } as Permission;
   }
 
   private loadEnrolments(): void {

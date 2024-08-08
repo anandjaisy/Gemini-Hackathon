@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TableheaderkeyMapperPipe } from './tableheaderkey-mapper.pipe';
+import { Permission } from '../utils';
 
 @Component({
   selector: 'app-table',
@@ -12,7 +13,7 @@ export class TableComponent {
   @Input({ required: true }) headers: string[] = [];
   @Input({ required: false }) dataSource: any[] = [];
   @Input({ required: true }) headerToKeyMap: any = {};
-  @Input({ required: false }) permission: boolean | null = false;
+  @Input({ required: false }) permission: Permission | null = null;
 
   @Output() viewEmitterAction = new EventEmitter<string>();
   @Output() editEmitterAction = new EventEmitter<string>();

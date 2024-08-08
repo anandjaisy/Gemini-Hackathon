@@ -21,3 +21,9 @@ export enum Role {
   STUDENT = 'student',
   ADMIN = 'admin',
 }
+
+export interface Permission {
+  viewPermission: boolean;
+  editPermission: boolean;
+  deletePermission: boolean;
+}

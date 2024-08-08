@@ -7,7 +7,9 @@ spring:
         cors-configurations:
           '[/**]':
             allowedOrigins: "http://localhost:4200"
-            allowedHeaders: "*"
+            allowedHeaders:
+              - Authorization
+              - Content-Type
             allowedMethods:
               - GET
               - POST
@@ -16,6 +18,7 @@ spring:
               - OPTIONS
               - HEAD
               - PATCH
+            allowCredentials: true
       routes:
         - id: course-service
           uri:

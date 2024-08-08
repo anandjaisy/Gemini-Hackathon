@@ -2,6 +2,7 @@ package fete.bird.feature.question;
 
 import fete.bird.shared.IController;
 import fete.bird.shared.IRepository;
+import fete.bird.shared.UserContext;
 import io.micronaut.http.annotation.*;
 import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
@@ -17,7 +18,8 @@ import java.util.UUID;
 @ApiResponse(responseCode = "404", description = "Course not found")
 @Tag(name = "Question")
 @ExecuteOn(TaskExecutors.BLOCKING)
-public record QuestionController(IRepository<QuestionResponse, QuestionRequest, QuestionCriteria> iQuestionRepository)
+public record QuestionController(IRepository<QuestionResponse, QuestionRequest, QuestionCriteria> iQuestionRepository,
+UserContext userContext)
         implements IController<QuestionResponse, QuestionRequest, QuestionCriteria> {
     @Override
     public Optional<QuestionResponse> get(UUID id) {
@@ -27,6 +29,7 @@ public record QuestionController(IRepository<QuestionResponse, QuestionRequest, 
     @Override
     @Get("/{?criteria*}")
     public List<QuestionResponse> find(Optional<QuestionCriteria> criteria) {
+        System.out.println(this.userContext.getCurrentUserId());
         return iQuestionRepository.find(criteria);
     }
 

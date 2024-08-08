@@ -47,17 +47,17 @@ public class QuestionRepository implements IRepository<QuestionResponse, Questio
     public Optional<QuestionResponse> create(QuestionRequest request) throws DuplicateException {
         if (questionData.values().stream().anyMatch(x -> x.question().equals(request.question()) && x.assessmentId().equals(request.assessmentId())))
             throw new DuplicateException(String.format("%s %s",request.question(), "already exists !"));
-        var question = requestQuestionMapper.apply(Optional.empty(),request);
+        var question = requestQuestionMapper.apply(Optional.empty(),request, Optional.empty());
         this.save(this.questionData,question);
         return Optional.of(questionResponseMapper.apply(question));
     }
 
     @Override
     public Optional<QuestionResponse> update(UUID id, QuestionRequest request) {
-        Question assessment = questionData.get(id);
-        if (assessment == null)
+        Question question = questionData.get(id);
+        if (question == null)
             throw new NotFoundException(Constants.NO_Record_Found);
-        var updateAssessment =  requestQuestionMapper.apply(Optional.of(assessment.id()),request);
+        var updateAssessment =  requestQuestionMapper.apply(Optional.of(question.id()),request, Optional.of(question));
         save(this.questionData,updateAssessment);
         return Optional.of(questionResponseMapper.apply(updateAssessment));
     }

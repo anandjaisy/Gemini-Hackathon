@@ -7,5 +7,5 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Serdeable
-public record QuestionResponse(UUID id, AssessmentResponse assessment, String question, String answer, Instant createdDate) {
+public record QuestionResponse(UUID id, AssessmentResponse assessment, String question, String answer, String studentAnswer,Instant createdDate, boolean isSubmittedByStudent, boolean isMarkedByTeacher) {
 }

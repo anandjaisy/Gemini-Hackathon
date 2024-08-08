@@ -1,6 +1,9 @@
 package fete.bird.feature.studentAssessment;
 
 import fete.bird.feature.question.Question;
+import fete.bird.feature.question.QuestionCriteria;
+import fete.bird.feature.question.QuestionRequest;
+import fete.bird.feature.question.QuestionResponse;
 import fete.bird.persistence.Root;
 import fete.bird.shared.Constants;
 import fete.bird.shared.DuplicateException;
@@ -22,14 +25,17 @@ public class StudentAssessmentRepository
     private final StudentAssessmentResponseMapper studentAssessmentResponseMapper;
     private final RequestStudentAssessmentMapper requestStudentAssessmentMapper;
     private final StudentAssessmentSpecification specification;
+    private final IRepository<QuestionResponse, QuestionRequest, QuestionCriteria> questionRepository;
     public StudentAssessmentRepository(RootProvider<Root> rootProvider,
                                        StudentAssessmentResponseMapper studentAssessmentResponseMapper,
                                        RequestStudentAssessmentMapper requestStudentAssessmentMapper,
-                                       StudentAssessmentSpecification specification) {
+                                       StudentAssessmentSpecification specification,
+                                       IRepository<QuestionResponse, QuestionRequest, QuestionCriteria> questionRepository) {
         this.studentAssessmentResponseMapper = studentAssessmentResponseMapper;
         this.studentAssessmentData = rootProvider.root().getStudentAssessment();
         this.requestStudentAssessmentMapper = requestStudentAssessmentMapper;
         this.specification = specification;
+        this.questionRepository = questionRepository;
     }
     @Override
     public Optional<StudentAssessmentResponse> get(UUID id) {
@@ -50,6 +56,7 @@ public class StudentAssessmentRepository
             throw new DuplicateException(String.format("%s %s",request.studentId(), "already exists !"));
         var assessment = requestStudentAssessmentMapper.apply(Optional.empty(),request);
         this.save(this.studentAssessmentData,assessment);
+        this.questionRepository.update(request.questionId(), new QuestionRequest(null, null, null, Optional.of(true), Optional.of(false)));
         return Optional.of(studentAssessmentResponseMapper.apply(assessment));
     }
 

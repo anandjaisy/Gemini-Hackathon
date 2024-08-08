@@ -8,7 +8,7 @@
                         and due date</p>
                 </div>
                 <div>
-                    @if(addPermission | async){
+                    @if((permission | async)?.editPermission){
                     <a mat-flat-button routerLink="./new" routerLinkActive="active">Add assessment</a>
                     }
                 </div>

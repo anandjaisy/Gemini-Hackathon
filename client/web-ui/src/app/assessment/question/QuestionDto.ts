@@ -6,4 +6,6 @@ export interface QuestionDto {
   question: string;
   answer: string;
   createdDate: string;
+  isSubmitedByStudent: boolean;
+  isMarkedByTeacher: boolean;
 }

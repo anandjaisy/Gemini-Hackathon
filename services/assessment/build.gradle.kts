@@ -25,6 +25,8 @@ dependencies {
     compileOnly("io.micronaut:micronaut-http-client")
     compileOnly("io.micronaut.openapi:micronaut-openapi-annotations")
 
+    implementation("com.auth0:java-jwt:4.4.0")
+
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("io.micronaut.sql:micronaut-jdbc-hikari")
     runtimeOnly("org.postgresql:postgresql")

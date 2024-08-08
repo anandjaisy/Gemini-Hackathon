@@ -3,7 +3,9 @@
         <form [formGroup]="form">
             <falcon-control [control]="select" />
         </form>
+        @if(permission | async){
         <div><a mat-flat-button routerLink="./new" routerLinkActive="active">Add question</a></div>
+        }
     </div>
     <div class="flex flex-col gap-2 my-2">
         <div class="flex justify-between">

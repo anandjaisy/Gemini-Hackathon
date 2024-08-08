@@ -7,7 +7,7 @@ import { CourseDto } from '../courseDto';
 import { CourseService } from '../course.service';
 import { TableComponent } from '../../common/table/table.component';
 import { AuthorizationService } from '../../auth-callback/authorization.service';
-import { Role } from '../../common/utils';
+import { Permission, Role } from '../../common/utils';
 
 @Component({
   selector: 'app-course-list',
@@ -17,7 +17,7 @@ import { Role } from '../../common/utils';
   styleUrl: './course-list.component.scss',
 })
 export class CourseListComponent implements OnInit {
-  permission: Promise<boolean> = Promise.resolve(false);
+  permission: Promise<Permission> = Promise.resolve({} as Permission);
   headers: string[] = ['Name', 'Description'];
   dataSource: CourseDto[] = [];
   private iDialogData: IDialogData = {} as IDialogData;
@@ -40,11 +40,22 @@ export class CourseListComponent implements OnInit {
     });
   }
 
-  private async permissionCheck(): Promise<boolean> {
-    return await this.authorizationService.checkRoles([
+  private async permissionCheck(): Promise<Permission> {
+    const adminTeacher = await this.authorizationService.checkRoles([
       Role.ADMIN,
       Role.TEACHER,
+      Role.STUDENT,
     ]);
+    const student = await this.authorizationService.checkRoles([
+      Role.ADMIN,
+      Role.TEACHER,
+      Role.STUDENT,
+    ]);
+    return {
+      viewPermission: adminTeacher || student,
+      editPermission: adminTeacher,
+      deletePermission: adminTeacher,
+    } as Permission;
   }
 
   editEmitterAction(event: string): void {

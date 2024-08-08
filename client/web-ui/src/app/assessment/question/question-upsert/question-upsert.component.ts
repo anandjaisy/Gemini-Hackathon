@@ -26,19 +26,23 @@ export class QuestionUpsertComponent
   implements OnInit
 {
   private isNew: boolean = false;
+  private assessmentId: string = '';
   private id: string | undefined = undefined;
   constructor(
     private assessmentService: AssessmentService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private questionService: QuestionService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private route: ActivatedRoute
   ) {
     super();
     this.defineForm();
   }
   ngOnInit(): void {
     this.formGroup = this.createControls();
+    this.assessmentId =
+      this.route.parent?.parent?.parent?.snapshot.params['id'];
     this.loadAssessment();
     this.loadQuestion();
   }
@@ -123,11 +127,15 @@ export class QuestionUpsertComponent
     if (this.isNew) {
       this.questionService
         .post(model)
-        .subscribe(() => this.router.navigate(['./assessment/question']));
+        .subscribe(() =>
+          this.router.navigate([`./assessment/${this.assessmentId}/question`])
+        );
     } else {
       this.questionService
         .put(this.id as string, model)
-        .subscribe(() => this.router.navigate(['./assessment/question']));
+        .subscribe(() =>
+          this.router.navigate([`./assessment/${this.assessmentId}/question`])
+        );
     }
     return of(model);
   }
