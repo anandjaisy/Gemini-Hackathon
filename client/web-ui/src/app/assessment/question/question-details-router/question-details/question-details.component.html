@@ -1,6 +1,7 @@
 <div class="mx-5 my-5">
     <fal-card>
-        @if(studentPermission| async){
+        @if(question$ | async; as question) {
+        @if((studentPermission| async) && (!question?.isSubmittedByStudent)){
         <div class="flex justify-end ...">
             <div class="p-2 bg-gray-200 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex"
                 role="alert">
@@ -10,7 +11,6 @@
             </div>
         </div>
         }
-        @if(question$ | async; as question) {
         <div class="flex justify-between">
             <div class="flex flex-col">
                 <span class="font-medium text-neutral-600">{{question?.assessment?.name}}</span>

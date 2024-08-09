@@ -37,7 +37,9 @@ public record StudentAssessmentController(IRepository<StudentAssessmentResponse,
 
     @Override
     public Optional<StudentAssessmentResponse> create(StudentAssessmentRequest request) {
-        return iRepository.create(request);
+        Optional<StudentAssessmentResponse> result = iRepository.create(request);
+        result.map(studentAssessmentResponse -> questionRepository.update(studentAssessmentResponse.questionId(),new QuestionRequest(null, null, null, Optional.of(true), Optional.of(false))));
+        return result;
     }
 
     @Override
