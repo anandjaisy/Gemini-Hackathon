@@ -9,10 +9,8 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.eclipsestore.RootProvider;
 import io.micronaut.eclipsestore.annotations.StoreParams;
 import jakarta.inject.Singleton;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+
+import java.util.*;
 
 @Singleton
 public class StudentAssessmentRepository
@@ -37,9 +35,8 @@ public class StudentAssessmentRepository
 
     @Override
     public List<StudentAssessmentResponse> find(Optional<StudentAssessmentCriteria> criteria) {
-        specification.setCriteria(criteria);
-        return studentAssessmentData.values().stream()
-                .filter(specification)
+        var  studentAssessmentResponses = specification.setCriteria(criteria).apply(new ArrayList<>(studentAssessmentData.values()));
+        return studentAssessmentResponses.stream()
                 .map(studentAssessmentResponseMapper).toList();
     }
 

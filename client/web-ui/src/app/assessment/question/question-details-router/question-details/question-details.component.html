@@ -1,7 +1,7 @@
 <div class="mx-5 my-5">
     <fal-card>
         @if(question$ | async; as question) {
-        @if((studentPermission| async) && (!question?.isSubmittedByStudent)){
+        @if((studentPermission| async) && (question?.isSubmittedByStudent)){
         <div class="flex justify-end ...">
             <div class="p-2 bg-gray-200 items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex"
                 role="alert">

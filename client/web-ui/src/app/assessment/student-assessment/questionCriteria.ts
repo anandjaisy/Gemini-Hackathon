@@ -1,4 +1,4 @@
 export interface QuestionCriteria {
-  assessmentId: string;
+  studentId: string;
   questionId: String;
 }

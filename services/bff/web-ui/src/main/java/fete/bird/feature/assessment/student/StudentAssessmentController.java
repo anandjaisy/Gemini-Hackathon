@@ -34,13 +34,13 @@ public class StudentAssessmentController {
 
     @Get
     public List<StudentAssessmentResponse> find(@Header("Authorization") String authorizationHeader,
-                                                @QueryValue String assessmentId,
+                                                @QueryValue String studentId,
                                                 @QueryValue String questionId)
             throws InterruptedException, IOException, ExecutionException {
         List<StudentAssessmentResponse> studentAssessmentResponse;
         List<URI> uris = List.of(
                 URI.create("http://localhost:5001/admin/realms/FeteBird/users"),
-                URI.create(String.format("http://localhost:8082/assessment/student?assessmentId=%s&questionId=%s", assessmentId, questionId))
+                URI.create(String.format("http://localhost:8082/assessment/student?studentId=%s&questionId=%s", studentId, questionId))
         );
         List<Callable<HttpResponse<String>>> callables = uris.stream().map(uri -> (Callable<HttpResponse<String>>) () -> {
             HttpRequest request = HttpRequest.newBuilder().uri(uri)

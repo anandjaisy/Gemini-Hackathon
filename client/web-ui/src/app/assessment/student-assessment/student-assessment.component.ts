@@ -8,6 +8,7 @@ import { QuestionCriteria } from './questionCriteria';
 import { ActivatedRoute } from '@angular/router';
 import { StudentAssessmentResponseDto } from './student-assessment.dto';
 import { CommonModule } from '@angular/common';
+import { AuthorizationService } from '../../auth-callback/authorization.service';
 
 @Component({
   selector: 'app-student-assessment',
@@ -29,11 +30,11 @@ export class StudentAssessmentComponent implements OnInit {
   constructor(
     private studentAssessmentService: StudentAssessmentService,
     private route: ActivatedRoute,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private authorizationService: AuthorizationService
   ) {}
   ngOnInit(): void {
-    this.assessmentId =
-      this.route.parent?.parent?.parent?.parent?.snapshot.params['id'];
+    this.assessmentId = this.authorizationService.getUserDetails().id;
     this.questionId = this.route.parent?.snapshot.params['id'];
     this.loadData();
   }
@@ -41,7 +42,7 @@ export class StudentAssessmentComponent implements OnInit {
   private loadData(): void {
     this.studentAssessmentService
       .find({
-        assessmentId: this.assessmentId,
+        studentId: this.assessmentId,
         questionId: this.questionId,
       } as QuestionCriteria)
       .subscribe((item) => {

@@ -131,7 +131,7 @@ export class QuestionDetailsComponent implements OnInit {
     const studentAssessment = {
       studentId: this.authorizationService.getUserDetails().id,
       questionId: this.questionId,
-      answer: form.value.answer,
+      answer: form.value.studentAnswer,
     } as StudentAssessmentDto;
     this.studentAssessmentService.post(studentAssessment).subscribe(() => {
       this.router.navigate(['./assessment']);

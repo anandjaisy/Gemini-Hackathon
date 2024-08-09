@@ -39,7 +39,7 @@ dependencies {
 
 
 application {
-    mainClass = "fete.bird.Application"
+    mainClass = "fete.bird.Course"
 }
 java {
     sourceCompatibility = JavaVersion.toVersion("21")

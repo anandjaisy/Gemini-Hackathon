@@ -10,9 +10,9 @@ import io.swagger.v3.oas.annotations.info.Info;
                 version = "0.0"
         )
 )
-public class CourseApplication {
+public class Course {
 
     public static void main(String[] args) {
-        Micronaut.run(CourseApplication.class, args);
+        Micronaut.run(Course.class, args);
     }
 }

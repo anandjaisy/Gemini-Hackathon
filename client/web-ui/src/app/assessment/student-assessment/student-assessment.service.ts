@@ -3,6 +3,7 @@ import { AHttpOperation } from '../../common/utils';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { QuestionCriteria } from './questionCriteria';
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +13,8 @@ export class StudentAssessmentService implements AHttpOperation {
   constructor(private httpClient: HttpClient) {}
   public find(criteria: any): Observable<any> {
     let params = new HttpParams();
-    if (criteria.assessmentId != null) {
-      params = params.set('assessmentId', criteria.assessmentId as string);
+    if (criteria.studentId != null) {
+      params = params.set('studentId', criteria.studentId as string);
     }
     if (criteria.questionId != null) {
       params = params.set('questionId', criteria.questionId as string);
