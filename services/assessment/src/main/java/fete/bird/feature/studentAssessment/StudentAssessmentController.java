@@ -6,6 +6,7 @@ import fete.bird.feature.question.QuestionResponse;
 import fete.bird.shared.IController;
 import fete.bird.shared.IRepository;
 import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
 import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -29,6 +30,7 @@ public record StudentAssessmentController(IRepository<StudentAssessmentResponse,
     }
 
     @Override
+    @Get("/{?criteria*}")
     public List<StudentAssessmentResponse> find(Optional<StudentAssessmentCriteria> criteria) {
         return iRepository.find(criteria);
     }

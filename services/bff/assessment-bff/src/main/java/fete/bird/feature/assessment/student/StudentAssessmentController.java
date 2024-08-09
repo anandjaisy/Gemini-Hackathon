@@ -37,12 +37,11 @@ public class StudentAssessmentController {
                                                 @QueryValue String assessmentId,
                                                 @QueryValue String questionId)
             throws InterruptedException, IOException, ExecutionException {
-        List<StudentAssessmentResponse> enrolmentResponses;
+        List<StudentAssessmentResponse> studentAssessmentResponse;
         List<URI> uris = List.of(
                 URI.create("http://localhost:5001/admin/realms/FeteBird/users"),
-                URI.create(String.format("http://localhost:8081/question?assessmentId=%s&questionId=%s", assessmentId, questionId))
+                URI.create(String.format("http://localhost:8082/assessment/student?assessmentId=%s&questionId=%s", assessmentId, questionId))
         );
-
         List<Callable<HttpResponse<String>>> callables = uris.stream().map(uri -> (Callable<HttpResponse<String>>) () -> {
             HttpRequest request = HttpRequest.newBuilder().uri(uri)
                     .header("Authorization", authorizationHeader)
@@ -53,26 +52,23 @@ public class StudentAssessmentController {
         try (ExecutorService executorService = Executors.newVirtualThreadPerTaskExecutor()) {
             List<Future<HttpResponse<String>>> futures = executorService.invokeAll(callables);
 
-            List<Question> questionList = new ArrayList<>();
+            List<StudentAssessment> studentAssessmentResponses = new ArrayList<>();
             List<User> users = new ArrayList<>();
-            List<Enrolment> enrolments = new ArrayList<>();
 
             for (Future<HttpResponse<String>> future : futures) {
                 HttpResponse<String> response = future.get();
                 String body = response.body();
                 if (response.uri().getPath().endsWith("users")) {
                     users.addAll(objectMapper.readValue(body, Argument.listOf(User.class)));
-                } else if (response.uri().getPath().endsWith("question")) {
-                    questionList.addAll(objectMapper.readValue(body, Argument.listOf(Question.class)));
+                } else if (response.uri().getPath().endsWith("/assessment/student")) {
+                    studentAssessmentResponses.addAll(objectMapper.readValue(body, Argument.listOf(StudentAssessment.class)));
                 }
             }
-            enrolmentResponses = enrolments.stream().map(enrolment -> {
-                Question course = questionList.stream().filter(x -> x.id().equals(enrolment.courseId())).findFirst().orElse(null);
-                User professor = users.stream().filter(x -> x.id().equals(enrolment.professorId())).findFirst().orElse(null);
-                User student = users.stream().filter(x -> x.id().equals(enrolment.studentId())).findFirst().orElse(null);
-                return new StudentAssessmentResponse();
+            studentAssessmentResponse = studentAssessmentResponses.stream().map(studentAssessment -> {
+                User user = users.stream().filter(x -> x.id().equals(studentAssessment.studentId())).findFirst().orElse(null);
+                return user != null ? new StudentAssessmentResponse(user, studentAssessment) : null;
             }).toList();
         }
-        return enrolmentResponses;
+        return studentAssessmentResponse;
     }
 }

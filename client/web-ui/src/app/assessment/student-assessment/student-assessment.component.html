@@ -1,17 +1,16 @@
 <div class="mx-20 my-10">
     <fal-card>
         <ul role="list" class="divide-y divide-gray-200" style="margin-right: 3%;">
+            @for(studentAssessment of studentAssessments; track studentAssessment){
             <li class="flex justify-between gap-x-6 py-5">
                 <div class="flex min-w-0 gap-x-4">
                     <img class="h-12 w-12 flex-none rounded-full bg-gray-50"
                         src="https://icons.veryicon.com/png/o/miscellaneous/two-color-icon-library/user-286.png" alt="">
                     <div class="min-w-0">
-                        <p class="text-sm leading-6 text-gray-900">Co-Founder / CEO</p>
-                        <p class="truncate text-sm font-thin leading-5 text-gray-500">lExplicabo nihil laborum.
-                            Saepe facilis
-                            consequuntur in eaque. Consequatur perspiciatis quam. Sed est illo quia. Explicabo nihil
-                            laborum. Saepe facilis
-                            consequuntur in eaque. Consequatur perspiciatis quam. Sed est illo quia.</p>
+                        <p class="text-sm leading-6 text-gray-900">{{studentAssessment?.user?.email}} /
+                            {{studentAssessment?.user?.firstName}}</p>
+                        <p class="truncate text-sm font-thin leading-5 text-gray-500">
+                            {{studentAssessment?.question?.answer}}</p>
                     </div>
                 </div>
                 <div class="flex justify-start gap-2 shrink-0 items-center">
@@ -20,100 +19,7 @@
                 </div>
             </li>
             <mat-divider></mat-divider>
-            <li class="flex justify-between gap-x-6 py-5">
-                <div class="flex min-w-0 gap-x-4">
-                    <img class="h-12 w-12 flex-none rounded-full bg-gray-50"
-                        src="https://icons.veryicon.com/png/o/miscellaneous/two-color-icon-library/user-286.png" alt="">
-                    <div class="min-w-0">
-                        <p class="text-sm leading-6 text-gray-900">Co-Founder / CEO</p>
-                        <p class="truncate text-sm font-thin leading-5 text-gray-500">lExplicabo nihil laborum.
-                            Saepe facilis
-                            consequuntur in eaque. Consequatur perspiciatis quam. Sed est illo quia. Explicabo nihil
-                            laborum. Saepe facilis
-                            consequuntur in eaque. Consequatur perspiciatis quam. Sed est illo quia.</p>
-                    </div>
-                </div>
-                <div class="flex justify-start gap-2 shrink-0 items-center">
-                    <button mat-stroked-button>Evaluate with AI</button>
-                    <button mat-stroked-button>View score</button>
-                </div>
-            </li>
-            <mat-divider></mat-divider>
-            <li class="flex justify-between gap-x-6 py-5">
-                <div class="flex min-w-0 gap-x-4">
-                    <img class="h-12 w-12 flex-none rounded-full bg-gray-50"
-                        src="https://icons.veryicon.com/png/o/miscellaneous/two-color-icon-library/user-286.png" alt="">
-                    <div class="min-w-0">
-                        <p class="text-sm leading-6 text-gray-900">Co-Founder / CEO</p>
-                        <p class="truncate text-sm font-thin leading-5 text-gray-500">lExplicabo nihil laborum.
-                            Saepe facilis
-                            consequuntur in eaque. Consequatur perspiciatis quam. Sed est illo quia. Explicabo nihil
-                            laborum. Saepe facilis
-                            consequuntur in eaque. Consequatur perspiciatis quam. Sed est illo quia.</p>
-                    </div>
-                </div>
-                <div class="flex justify-start gap-2 shrink-0 items-center">
-                    <button mat-stroked-button>Evaluate with AI</button>
-                    <button mat-stroked-button>View score</button>
-                </div>
-            </li>
-            <mat-divider></mat-divider>
-            <li class="flex justify-between gap-x-6 py-5">
-                <div class="flex min-w-0 gap-x-4">
-                    <img class="h-12 w-12 flex-none rounded-full bg-gray-50"
-                        src="https://icons.veryicon.com/png/o/miscellaneous/two-color-icon-library/user-286.png" alt="">
-                    <div class="min-w-0">
-                        <p class="text-sm leading-6 text-gray-900">Co-Founder / CEO</p>
-                        <p class="truncate text-sm font-thin leading-5 text-gray-500">lExplicabo nihil laborum.
-                            Saepe facilis
-                            consequuntur in eaque. Consequatur perspiciatis quam. Sed est illo quia. Explicabo nihil
-                            laborum. Saepe facilis
-                            consequuntur in eaque. Consequatur perspiciatis quam. Sed est illo quia.</p>
-                    </div>
-                </div>
-                <div class="flex justify-start gap-2 shrink-0 items-center">
-                    <button mat-stroked-button>Evaluate with AI</button>
-                    <button mat-stroked-button>View score</button>
-                </div>
-            </li>
-            <mat-divider></mat-divider>
-            <li class="flex justify-between gap-x-6 py-5">
-                <div class="flex min-w-0 gap-x-4">
-                    <img class="h-12 w-12 flex-none rounded-full bg-gray-50"
-                        src="https://icons.veryicon.com/png/o/miscellaneous/two-color-icon-library/user-286.png" alt="">
-                    <div class="min-w-0">
-                        <p class="text-sm leading-6 text-gray-900">Co-Founder / CEO</p>
-                        <p class="truncate text-sm font-thin leading-5 text-gray-500">lExplicabo nihil laborum.
-                            Saepe facilis
-                            consequuntur in eaque. Consequatur perspiciatis quam. Sed est illo quia. Explicabo nihil
-                            laborum. Saepe facilis
-                            consequuntur in eaque. Consequatur perspiciatis quam. Sed est illo quia.</p>
-                    </div>
-                </div>
-                <div class="flex justify-start gap-2 shrink-0 items-center">
-                    <button mat-stroked-button>Evaluate with AI</button>
-                    <button mat-stroked-button>View score</button>
-                </div>
-            </li>
-            <mat-divider></mat-divider>
-            <li class="flex justify-between gap-x-6 py-5">
-                <div class="flex min-w-0 gap-x-4">
-                    <img class="h-12 w-12 flex-none rounded-full bg-gray-50"
-                        src="https://icons.veryicon.com/png/o/miscellaneous/two-color-icon-library/user-286.png" alt="">
-                    <div class="min-w-0">
-                        <p class="text-sm leading-6 text-gray-900">Co-Founder / CEO</p>
-                        <p class="truncate text-sm font-thin leading-5 text-gray-500">lExplicabo nihil laborum.
-                            Saepe facilis
-                            consequuntur in eaque. Consequatur perspiciatis quam. Sed est illo quia. Explicabo nihil
-                            laborum. Saepe facilis
-                            consequuntur in eaque. Consequatur perspiciatis quam. Sed est illo quia.</p>
-                    </div>
-                </div>
-                <div class="flex justify-start gap-2 shrink-0 items-center">
-                    <button mat-stroked-button>Evaluate with AI</button>
-                    <button mat-stroked-button>View score</button>
-                </div>
-            </li>
+            }
         </ul>
     </fal-card>
 </div>

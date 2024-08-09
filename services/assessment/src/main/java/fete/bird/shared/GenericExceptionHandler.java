@@ -7,12 +7,16 @@ import io.micronaut.http.server.exceptions.ExceptionHandler;
 import io.micronaut.http.server.exceptions.response.ErrorContext;
 import io.micronaut.http.server.exceptions.response.ErrorResponseProcessor;
 import jakarta.inject.Singleton;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.NoSuchElementException;
 
 @Produces // Ensure the response content-type is set to application/json with the @Produces annotation.
 @Singleton
 public class GenericExceptionHandler<E extends RuntimeException> implements ExceptionHandler<E, HttpResponse<?>> {
     private final ErrorResponseProcessor<?> errorResponseProcessor;
-
+    private static final Logger LOG = LoggerFactory.getLogger(GenericExceptionHandler.class);
     public GenericExceptionHandler(ErrorResponseProcessor<?> errorResponseProcessor) {
         this.errorResponseProcessor = errorResponseProcessor;
     }
@@ -30,11 +34,11 @@ public class GenericExceptionHandler<E extends RuntimeException> implements Exce
                 .cause(exception)
                 .errorMessage(exception.getMessage())
                 .build();
-        if (exception instanceof DuplicateException)
-            return errorResponseProcessor.processResponse(errorContext, HttpResponse.badRequest());
-        else if (exception instanceof NotFoundException)
-            return errorResponseProcessor.processResponse(errorContext, HttpResponse.notFound());
-        else
-            return errorResponseProcessor.processResponse(errorContext, HttpResponse.serverError());
+        LOG.error(exception.getMessage());
+        return switch (exception) {
+            case DuplicateException e -> errorResponseProcessor.processResponse(errorContext, HttpResponse.badRequest());
+            case NotFoundException e -> errorResponseProcessor.processResponse(errorContext, HttpResponse.notFound());
+            default -> errorResponseProcessor.processResponse(errorContext, HttpResponse.serverError());
+        };
     }
 }

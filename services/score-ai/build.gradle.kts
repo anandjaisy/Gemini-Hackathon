@@ -15,8 +15,8 @@ dependencies {
     annotationProcessor("io.micronaut:micronaut-http-validation")
     annotationProcessor("io.micronaut.openapi:micronaut-openapi")
     implementation("io.micronaut:micronaut-jackson-databind")
-    implementation("dev.langchain4j:langchain4j-open-ai:0.32.0")
-    implementation("dev.langchain4j:langchain4j:0.32.0")
+    implementation("dev.langchain4j:langchain4j-vertex-ai-gemini:0.33.0")
+    implementation("dev.langchain4j:langchain4j:0.33.0")
 
     compileOnly("io.micronaut:micronaut-http-client")
     compileOnly("io.micronaut.openapi:micronaut-openapi-annotations")

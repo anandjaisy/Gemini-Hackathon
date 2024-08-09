@@ -16,6 +16,16 @@ public class StudentAssessmentSpecification implements Predicate<StudentAssessme
     }
     @Override
     public boolean test(StudentAssessment studentAssessment) {
-        return true;
+        return criteria.map(c -> {
+            boolean matches = true;
+            if (c.questionId() != null) {
+                matches = c.questionId().toString().equals(studentAssessment.questionId().toString());
+            }
+
+            if (c.questionId() != null) {
+                matches = matches && c.questionId().toString().equals(studentAssessment.studentId().toString());
+            }
+            return matches;
+        }).orElse(true);
     }
 }

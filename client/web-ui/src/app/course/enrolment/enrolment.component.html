@@ -8,9 +8,13 @@
                         and
                         role.</p>
                 </div>
+                @if(permission | async; as per){
                 <div>
+                    @if(per.editPermission){
                     <a mat-flat-button routerLink="./new" routerLinkActive="active">Add enrolment</a>
+                    }
                 </div>
+                }
             </div>
             <app-table [headers]="headers" [dataSource]="dataSource" [headerToKeyMap]="headerToKeyMap"
                 [permission]="permission | async" (editEmitterAction)="editEmitterAction($event)"

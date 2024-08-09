@@ -47,14 +47,8 @@ export class EnrolmentComponent implements OnInit {
   private async permissionCheck(): Promise<Permission> {
     const adminTeacher = await this.authorizationService.checkRoles([
       Role.ADMIN,
-      Role.TEACHER,
-      Role.STUDENT,
     ]);
-    const student = await this.authorizationService.checkRoles([
-      Role.ADMIN,
-      Role.TEACHER,
-      Role.STUDENT,
-    ]);
+    const student = await this.authorizationService.checkRoles([Role.STUDENT]);
     return {
       viewPermission: adminTeacher || student,
       editPermission: adminTeacher,
@@ -70,7 +64,6 @@ export class EnrolmentComponent implements OnInit {
   }
 
   editEmitterAction(event: string): void {
-    console.log(event);
     this.router.navigate([`./course/enrolment/${event}`]);
   }
   deleteEmitterAction(event: string): void {

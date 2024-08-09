@@ -23,12 +23,14 @@ public record QuestionResponseMapper(
     @Override
     public QuestionResponse apply(Question question) {
         String studentId = userContext.getCurrentUserId();
-        String studentAnswer = studentAssessmentRepository.find(Optional.of(new StudentAssessmentCriteria(UUID.fromString(studentId), question.id()))).getFirst().answer();
+        var studentAnswer = studentAssessmentRepository
+                .find(Optional.of(new StudentAssessmentCriteria(UUID.fromString(studentId), question.id())))
+                .stream().findFirst().orElse(null);
         return new QuestionResponse(question.id(),
                 iAssessmentRepository.get(question.assessmentId()).orElse(null),
                 question.question(),
                 question.answer(),
-                studentAnswer,
+                studentAnswer != null ? studentAnswer.answer() : null,
                 question.createdDate(),
                 question.isSubmitedByStudent(),
                 question.isMarkedByTeacher()
