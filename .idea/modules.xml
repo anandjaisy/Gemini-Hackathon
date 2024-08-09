@@ -3,12 +3,14 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Gemini-Hackathon.iml" filepath="$PROJECT_DIR$/.idea/Gemini-Hackathon.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/assessment-bff.main.iml" filepath="$PROJECT_DIR$/.idea/modules/assessment-bff.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/assessment.main.iml" filepath="$PROJECT_DIR$/.idea/modules/assessment.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/assessment.test.iml" filepath="$PROJECT_DIR$/.idea/modules/assessment.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/course.main.iml" filepath="$PROJECT_DIR$/.idea/modules/course.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/course.test.iml" filepath="$PROJECT_DIR$/.idea/modules/course.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/score-ai.main.iml" filepath="$PROJECT_DIR$/.idea/modules/score-ai.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/score-ai.test.iml" filepath="$PROJECT_DIR$/.idea/modules/score-ai.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/web-ui.main.iml" filepath="$PROJECT_DIR$/.idea/modules/web-ui.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/web-ui.test.iml" filepath="$PROJECT_DIR$/.idea/modules/web-ui.test.iml" />
     </modules>
   </component>
 </project>

@@ -22,11 +22,11 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
-        <option name="externalProjectPath" value="$PROJECT_DIR$/services/bff/assessment-bff" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/services/bff/web-ui" />
         <option name="gradleJvm" value="#JAVA_HOME" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$/services/bff/assessment-bff" />
+            <option value="$PROJECT_DIR$/services/bff/web-ui" />
           </set>
         </option>
       </GradleProjectSettings>

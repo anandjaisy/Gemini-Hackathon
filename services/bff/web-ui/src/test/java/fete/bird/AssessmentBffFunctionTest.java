@@ -2,14 +2,14 @@
 //import io.micronaut.http.*;
 //import static org.junit.jupiter.api.Assertions.*;
 //import org.junit.jupiter.api.Test;
-//import io.micronaut.gcp.function.http.*;
+////import io.micronaut.gcp.function.http.*;
 //
-//public class ScoreAiFunctionTest {
+//public class AssessmentBffFunctionTest {
 //
 //    @Test
 //    public void testGet() throws Exception {
 //        try (HttpFunction function = new HttpFunction()) {
-//            GoogleHttpResponse response = function.invoke(HttpMethod.GET, "/scoreAi");
+//            GoogleHttpResponse response = function.invoke(HttpMethod.GET, "/assessmentBff");
 //            assertEquals(HttpStatus.OK, response.getStatus());
 //        }
 //    }
@@ -19,7 +19,7 @@
 //        try (HttpFunction function = new HttpFunction()) {
 //            SampleInputMessage sampleInputMessage = new SampleInputMessage();
 //            sampleInputMessage.setName("Test Name");
-//            HttpRequest request = HttpRequest.POST("/scoreAi", sampleInputMessage).contentType(MediaType.APPLICATION_JSON_TYPE);
+//            HttpRequest request = HttpRequest.POST("/assessmentBff", sampleInputMessage).contentType(MediaType.APPLICATION_JSON_TYPE);
 //            GoogleHttpResponse response = function.invoke(request);
 //            assertEquals(HttpStatus.OK, response.getStatus());
 //        }
