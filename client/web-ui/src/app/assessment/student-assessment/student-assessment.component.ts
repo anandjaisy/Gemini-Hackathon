@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { FalconCoreModule } from '@falcon-ng/core';
 import { StudentAssessmentService } from './student-assessment.service';
 import { QuestionCriteria } from './questionCriteria';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { StudentAssessmentResponseDto } from './student-assessment.dto';
 import { CommonModule } from '@angular/common';
 import { AuthorizationService } from '../../auth-callback/authorization.service';
@@ -19,6 +19,7 @@ import { AuthorizationService } from '../../auth-callback/authorization.service'
     MatButtonModule,
     MatIconModule,
     CommonModule,
+    RouterLink,
   ],
   templateUrl: './student-assessment.component.html',
   styleUrl: './student-assessment.component.scss',

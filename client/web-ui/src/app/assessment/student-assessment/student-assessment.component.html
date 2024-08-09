@@ -7,18 +7,25 @@
                     <img class="h-12 w-12 flex-none rounded-full bg-gray-50"
                         src="https://icons.veryicon.com/png/o/miscellaneous/two-color-icon-library/user-286.png" alt="">
                     <div class="min-w-0">
-                        <p class="text-sm leading-6 text-gray-900">{{studentAssessment?.user?.email}} /
-                            {{studentAssessment?.user?.firstName}}</p>
+                        <p class="text-sm leading-6 text-gray-900">{{studentAssessment?.user?.firstName}}
+                            {{studentAssessment?.user?.lastName}} /
+                            {{studentAssessment?.user?.email}}
+                        </p>
                         <p class="truncate text-sm font-thin leading-5 text-gray-500">
                             {{studentAssessment?.question?.answer}}</p>
                     </div>
                 </div>
                 <div class="flex justify-start gap-2 shrink-0 items-center">
                     <button mat-stroked-button>Evaluate with AI</button>
-                    <button mat-stroked-button>View score</button>
+                    <a [routerLink]="['../score']"
+                        [queryParams]="{ questionId: studentAssessment?.question?.id, studentId: studentAssessment?.user?.id}"
+                        mat-stroked-button>View
+                        score</a>
                 </div>
             </li>
+            @if(studentAssessments.length > 1){
             <mat-divider></mat-divider>
+            }
             }
         </ul>
     </fal-card>

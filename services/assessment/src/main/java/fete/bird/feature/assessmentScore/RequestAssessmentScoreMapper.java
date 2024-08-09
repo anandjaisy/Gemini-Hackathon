@@ -13,8 +13,8 @@ public record RequestAssessmentScoreMapper() implements BiFunction<Optional<UUID
         UUID id = requestId.orElseGet(UUID::randomUUID);
         return new AssessmentScore(id,
                 request.studentId(),
+                request.questionId(),
                 request.score(),
-                request.studentAssessmentId(),
                 request.similarity());
     }
 }

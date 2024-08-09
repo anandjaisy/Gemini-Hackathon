@@ -11,7 +11,7 @@ public record AssessmentScoreResponseMapper() implements Function<AssessmentScor
         return new AssessmentScoreResponse(assessmentScore.id(),
                 assessmentScore.studentId(),
                 assessmentScore.score(),
-                assessmentScore.studentAssessmentId(),
+                assessmentScore.questionId(),
                 assessmentScore.similarity());
     }
 }

@@ -4,5 +4,5 @@ import io.micronaut.serde.annotation.Serdeable;
 
 import java.util.UUID;
 @Serdeable
-public record AssessmentScoreRequest(UUID studentId, Double score, UUID studentAssessmentId, String similarity) {
+public record AssessmentScoreRequest(UUID studentId, UUID questionId, Double score, String similarity) {
 }

@@ -4,6 +4,7 @@ import { QuestionListComponent } from './question-list/question-list.component';
 import { QuestionUpsertComponent } from './question-upsert/question-upsert.component';
 import { StudentAssessmentComponent } from '../student-assessment/student-assessment.component';
 import { QuestionDetailsRouterComponent } from './question-details-router/question-details-router.component';
+import { StudentScoreComponent } from '../student-assessment/student-score/student-score.component';
 
 export const questionRoutes: Routes = [
   {
@@ -24,6 +25,10 @@ export const questionRoutes: Routes = [
           {
             path: 'students',
             component: StudentAssessmentComponent,
+          },
+          {
+            path: 'score',
+            component: StudentScoreComponent,
           },
         ],
       },
