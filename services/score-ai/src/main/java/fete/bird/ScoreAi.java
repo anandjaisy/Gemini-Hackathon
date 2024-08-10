@@ -2,9 +2,9 @@ package fete.bird;
 
 import io.micronaut.runtime.Micronaut;
 
-public class ScoreAiApplication {
+public class ScoreAi {
 
     public static void main(String[] args) {
-        Micronaut.run(ScoreAiApplication.class, args);
+        Micronaut.run(ScoreAi.class, args);
     }
 }

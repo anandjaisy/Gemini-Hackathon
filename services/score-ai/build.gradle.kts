@@ -18,6 +18,9 @@ dependencies {
     implementation("dev.langchain4j:langchain4j-vertex-ai-gemini:0.33.0")
     implementation("dev.langchain4j:langchain4j:0.33.0")
 
+    annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
+    implementation("io.micronaut.serde:micronaut-serde-jackson")
+
     compileOnly("io.micronaut:micronaut-http-client")
     compileOnly("io.micronaut.openapi:micronaut-openapi-annotations")
     runtimeOnly("ch.qos.logback:logback-classic")
@@ -26,7 +29,7 @@ dependencies {
 
 
 application {
-    mainClass = "fete.bird.Application"
+    mainClass = "fete.bird.ScoreAi"
 }
 java {
     sourceCompatibility = JavaVersion.toVersion("21")
