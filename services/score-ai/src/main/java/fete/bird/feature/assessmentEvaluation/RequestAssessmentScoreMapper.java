@@ -1,4 +1,4 @@
-package fete.bird.feature.assessmentScore;
+package fete.bird.feature.assessmentEvaluation;
 
 import jakarta.inject.Singleton;
 
@@ -14,7 +14,9 @@ public record RequestAssessmentScoreMapper() implements BiFunction<Optional<UUID
         return new AssessmentScore(id,
                 request.studentId(),
                 request.questionId(),
-                request.score(),
-                request.similarity());
+                request.answer(),
+                request.suggestion(),
+                request.percentageMatched(),
+                request.grade());
     }
 }

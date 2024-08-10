@@ -1,7 +1,6 @@
 package fete.bird.feature.score;
 
 import dev.langchain4j.service.UserMessage;
-import dev.langchain4j.service.V;
 
 public interface IScoringAnalyzer {
         @UserMessage("""

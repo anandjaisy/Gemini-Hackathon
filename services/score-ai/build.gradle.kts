@@ -25,6 +25,18 @@ dependencies {
     compileOnly("io.micronaut.openapi:micronaut-openapi-annotations")
     runtimeOnly("ch.qos.logback:logback-classic")
     testImplementation("io.micronaut:micronaut-http-client")
+
+    runtimeOnly("io.micronaut.sql:micronaut-jdbc-hikari")
+    runtimeOnly("org.postgresql:postgresql")
+    runtimeOnly("org.eclipse.store:afs-sql")
+
+    annotationProcessor("io.micronaut.eclipsestore:micronaut-eclipsestore-annotations")
+    implementation("io.micronaut.eclipsestore:micronaut-eclipsestore")
+    implementation("io.micronaut.eclipsestore:micronaut-eclipsestore-annotations")
+    developmentOnly("io.micronaut.eclipsestore:micronaut-eclipsestore-rest")
+
+    testImplementation("com.h2database:h2")
+    testImplementation("net.datafaker:datafaker:2.2.2")
 }
 
 
@@ -60,6 +72,15 @@ micronaut {
     }
 }
 
+// Can MicroStream handle Records?
+//Yes, but due to reflection restrictions of records introduced in Java 15 an export has to be added to the VM parameters:
+tasks.withType<JavaExec> {
+    jvmArgs("--add-exports=java.base/jdk.internal.misc=ALL-UNNAMED")
+}
+tasks.test {
+    // Set JVM options for the test task
+    jvmArgs("--add-exports=java.base/jdk.internal.misc=ALL-UNNAMED")
+}
 
 tasks.named<io.micronaut.gradle.docker.NativeImageDockerfile>("dockerfileNative") {
     jdkVersion = "21"

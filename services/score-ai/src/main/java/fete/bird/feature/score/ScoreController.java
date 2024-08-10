@@ -6,7 +6,7 @@ import io.micronaut.http.annotation.Post;
 import io.micronaut.scheduling.TaskExecutors;
 import io.micronaut.scheduling.annotation.ExecuteOn;
 
-@Controller("/scoring")
+@Controller("/scoring/evaluate")
 @ExecuteOn(TaskExecutors.BLOCKING)
 public record ScoreController(IScoreService scoreService){
     @Post

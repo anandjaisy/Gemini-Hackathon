@@ -1,4 +1,9 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,8 +19,10 @@ import { StudentAssessmentActions } from './store/student-assessment.actions';
 import { Store } from '@ngrx/store';
 import { ScoreRequest } from './score-request.dto';
 import { StudentAssessmentState } from './store/student-assessment.reducer';
-import { Observable, of } from 'rxjs';
+import { Observable, of, take } from 'rxjs';
 import { selectStudentAssessmentState } from './store/student-assessment.selectors';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-student-assessment',
@@ -28,6 +35,7 @@ import { selectStudentAssessmentState } from './store/student-assessment.selecto
     CommonModule,
     RouterLink,
     NoContentComponent,
+    MatProgressBarModule,
   ],
   templateUrl: './student-assessment.component.html',
   styleUrl: './student-assessment.component.scss',
@@ -37,7 +45,9 @@ export class StudentAssessmentComponent implements OnInit {
   private assessmentId: string | undefined = undefined;
   private questionId: string | undefined = undefined;
   studentAssessment$: Observable<StudentAssessmentState> = of();
-  showResult: boolean = false;
+  showResult: boolean = true;
+  isEvaluate: boolean = false;
+  isScore: boolean = false;
   constructor(
     private studentAssessmentService: StudentAssessmentService,
     private route: ActivatedRoute,
@@ -66,31 +76,49 @@ export class StudentAssessmentComponent implements OnInit {
 
   evaluateWithAIClick(
     answer: string | undefined,
-    studentId: string | undefined
+    studentId: string | undefined,
+    questionId: string | undefined,
+    studentName: string | undefined
   ): void {
     this.store.dispatch(
       StudentAssessmentActions.updateAnswerStudentId({
         answer: answer as string,
         studentId: studentId as string,
+        studentName: studentName as string,
       })
     );
-    this.evaluateScore();
+    this.evaluateScore(questionId);
   }
 
-  private evaluateScore() {
-    this.studentAssessment$.subscribe((state) => {
-      this.showResult = false;
+  private evaluateScore(questionId: string | undefined) {
+    this.isEvaluate = true;
+    this.showResult = false;
+    this.studentAssessment$.pipe(take(1)).subscribe((state) => {
       const score: ScoreRequest = {
         baseQuestion: state.baseQuestion,
         baseAnswer: state.baseAnswer,
         answer: state.answer,
         studentId: state.studentId,
-        questionId: state.questionId,
+        questionId: questionId as string,
       };
-      this.studentAssessmentService.postScore(score).subscribe(() => {
-        this.showResult = true;
-        this.cdr.detectChanges();
-      });
+      this.studentAssessmentService.postScore(score).subscribe(
+        (result) => {
+          this.showResult = false;
+          this.isEvaluate = false;
+          this.isScore = true;
+          this.cdr.detectChanges();
+        },
+        (error) => {
+          this.showResult = true;
+          this.isEvaluate = false;
+          this.cdr.detectChanges();
+        },
+        () => {
+          this.showResult = false;
+          this.isEvaluate = false;
+          this.cdr.detectChanges();
+        }
+      );
     });
   }
 }

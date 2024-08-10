@@ -10,7 +10,11 @@ export interface StudentAssessmentState {
   assessmentId: string;
   assessmentName: string;
   studentId: string;
+  studentName: string;
   questionId: string;
+  suggestion: string;
+  percentageMatched: string;
+  grade: string;
 }
 
 export const initialState: StudentAssessmentState = {
@@ -20,7 +24,11 @@ export const initialState: StudentAssessmentState = {
   assessmentId: '',
   assessmentName: '',
   studentId: '',
+  studentName: '',
   questionId: '',
+  suggestion: '',
+  percentageMatched: '',
+  grade: '',
 };
 
 export const studentAssessmentReducer = createReducer(
@@ -37,10 +45,11 @@ export const studentAssessmentReducer = createReducer(
   ),
   on(
     StudentAssessmentActions.updateAnswerStudentId,
-    (state, { answer, studentId }) => ({
+    (state, { answer, studentId, studentName }) => ({
       ...state,
       answer: answer,
       studentId: studentId,
+      studentName: studentName,
     })
   ),
   on(
@@ -48,6 +57,16 @@ export const studentAssessmentReducer = createReducer(
     (state, { assessmentName }) => ({
       ...state,
       assessmentName: assessmentName,
+    })
+  ),
+  on(
+    StudentAssessmentActions.updateAssessmentScoreSuggestionGradePercentage,
+    (state, { suggestion, percentageMatched, grade, answer }) => ({
+      ...state,
+      answer: answer,
+      suggestion: suggestion,
+      percentageMatched: percentageMatched,
+      grade: grade,
     })
   )
 );

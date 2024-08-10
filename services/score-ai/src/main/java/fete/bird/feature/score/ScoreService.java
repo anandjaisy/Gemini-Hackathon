@@ -7,13 +7,19 @@ import dev.langchain4j.model.input.PromptTemplate;
 import dev.langchain4j.model.vertexai.VertexAiGeminiChatModel;
 import dev.langchain4j.service.AiServices;
 import fete.bird.common.ConfigResource;
+import fete.bird.common.IRepository;
+import fete.bird.feature.assessmentEvaluation.AssessmentScoreCriteria;
+import fete.bird.feature.assessmentEvaluation.AssessmentScoreRequest;
+import fete.bird.feature.assessmentEvaluation.AssessmentScoreResponse;
 import jakarta.inject.Singleton;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Singleton
-public record ScoreService(ConfigResource configResource) implements IScoreService {
+public record ScoreService(ConfigResource configResource,
+                           IRepository<AssessmentScoreResponse, AssessmentScoreRequest, AssessmentScoreCriteria> iRepository) implements IScoreService {
     @Override
     public ScoreResponse get(ScoreRequest request) {
         ChatLanguageModel model = VertexAiGeminiChatModel.builder()
@@ -56,6 +62,8 @@ public record ScoreService(ConfigResource configResource) implements IScoreServi
                 .systemMessageProvider(chatMemoryId -> prompt.text())
                 .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
                 .build();
-        return analyzer.score(request.answer());
+        var aiResponse = analyzer.score(request.answer());
+        iRepository.create(new AssessmentScoreRequest(UUID.fromString(request.studentId()), UUID.fromString(request.questionId()), request.answer(), aiResponse.suggestion(), aiResponse.percentageMatched(), aiResponse.grade()));
+        return aiResponse;
     }
 }

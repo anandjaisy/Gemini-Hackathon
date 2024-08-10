@@ -1,4 +1,4 @@
-package fete.bird.feature.assessmentScore;
+package fete.bird.feature.assessmentEvaluation;
 
 import jakarta.inject.Singleton;
 
@@ -10,8 +10,10 @@ public record AssessmentScoreResponseMapper() implements Function<AssessmentScor
     public AssessmentScoreResponse apply(AssessmentScore assessmentScore) {
         return new AssessmentScoreResponse(assessmentScore.id(),
                 assessmentScore.studentId(),
-                assessmentScore.score(),
                 assessmentScore.questionId(),
-                assessmentScore.similarity());
+                assessmentScore.answer(),
+                assessmentScore.suggestion(),
+                assessmentScore.percentageMatched(),
+                assessmentScore.grade());
     }
 }

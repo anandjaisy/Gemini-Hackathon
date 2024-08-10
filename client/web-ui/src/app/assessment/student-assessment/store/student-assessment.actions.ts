@@ -13,9 +13,16 @@ export const StudentAssessmentActions = createActionGroup({
     'Update AnswerStudentId': props<{
       answer: string;
       studentId: string;
+      studentName: string;
     }>(),
     'Update AssessmentName': props<{
       assessmentName: string;
+    }>(),
+    'Update AssessmentScoreSuggestionGradePercentage': props<{
+      answer: string;
+      suggestion: string;
+      percentageMatched: string;
+      grade: string;
     }>(),
   },
 });

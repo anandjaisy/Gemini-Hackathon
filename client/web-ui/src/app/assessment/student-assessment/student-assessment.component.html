@@ -17,15 +17,23 @@
                     </div>
                 </div>
                 <div class="flex justify-start gap-2 shrink-0 items-center">
+                    @if(showResult){
                     <button mat-stroked-button
-                        (click)="evaluateWithAIClick(studentAssessment?.question?.answer, studentAssessment?.question?.studentId)">Evaluate
+                        (click)="evaluateWithAIClick(studentAssessment?.question?.answer, studentAssessment?.question?.studentId,studentAssessment?.question?.id, studentAssessment?.user?.email)">Evaluate
                         with AI</button>
-                    <!-- @if(showResult){ -->
+                    }
+                    <!-- @if(isScore){ -->
                     <a [routerLink]="['../score']"
                         [queryParams]="{ questionId: studentAssessment?.question?.id, studentId: studentAssessment?.user?.id}"
                         mat-stroked-button>View
                         score</a>
                     <!-- } -->
+                    @if(isEvaluate){
+                    <button mat-stroked-button disabled>
+                        Thinking ...
+                        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                    </button>
+                    }
                 </div>
             </li>
             @if(studentAssessments.length > 1){

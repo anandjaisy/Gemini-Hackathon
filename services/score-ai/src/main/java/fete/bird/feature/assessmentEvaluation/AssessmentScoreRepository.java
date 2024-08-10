@@ -1,19 +1,16 @@
-package fete.bird.feature.assessmentScore;
+package fete.bird.feature.assessmentEvaluation;
 
-import fete.bird.feature.question.Question;
+import fete.bird.common.Constants;
+import fete.bird.common.DuplicateException;
+import fete.bird.common.IRepository;
+import fete.bird.common.NotFoundException;
 import fete.bird.persistence.Root;
-import fete.bird.shared.Constants;
-import fete.bird.shared.DuplicateException;
-import fete.bird.shared.IRepository;
-import fete.bird.shared.NotFoundException;
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.eclipsestore.RootProvider;
 import io.micronaut.eclipsestore.annotations.StoreParams;
 import jakarta.inject.Singleton;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+
+import java.util.*;
 
 @Singleton
 public class AssessmentScoreRepository
@@ -40,17 +37,16 @@ public class AssessmentScoreRepository
 
     @Override
     public List<AssessmentScoreResponse> find(Optional<AssessmentScoreCriteria> criteria) {
-        specification.setCriteria(criteria);
-        return assessmentScoreData.values().stream()
-                .filter(specification)
+        var assessmentScoreResponses = specification.setCriteria(criteria).apply(new ArrayList<>(assessmentScoreData.values()));
+        return assessmentScoreResponses.stream()
                 .map(assessmentScoreResponseMapper).toList();
     }
 
     @Override
     public Optional<AssessmentScoreResponse> create(AssessmentScoreRequest request) throws DuplicateException {
-        if (assessmentScoreData.values().stream().anyMatch(x -> (x.studentId().equals(request.studentId()) && x.studentAssessmentId().equals(request.studentAssessmentId()))))
-            throw new DuplicateException(String.format("%s %s",request.studentId(), "already exists !"));
-        var assessment = requestAssessmentScoreMapper.apply(Optional.empty(),request);
+        if (assessmentScoreData.values().stream().anyMatch(x -> (x.studentId().equals(request.studentId()) && x.questionId().equals(request.questionId()))))
+            throw new DuplicateException(String.format("%s %s", request.studentId(), "already exists !"));
+        var assessment = requestAssessmentScoreMapper.apply(Optional.empty(), request);
         this.save(this.assessmentScoreData, assessment);
         return Optional.of(assessmentScoreResponseMapper.apply(assessment));
     }
@@ -60,14 +56,14 @@ public class AssessmentScoreRepository
         AssessmentScore studentAssessment = assessmentScoreData.get(id);
         if (studentAssessment == null)
             throw new NotFoundException(Constants.NO_Record_Found);
-        var updateAssessment =  requestAssessmentScoreMapper.apply(Optional.of(studentAssessment.id()),request);
+        var updateAssessment = requestAssessmentScoreMapper.apply(Optional.of(studentAssessment.id()), request);
         save(this.assessmentScoreData, updateAssessment);
         return Optional.of(assessmentScoreResponseMapper.apply(updateAssessment));
     }
 
     @Override
     public void delete(UUID id) {
-        deleteById(this.assessmentScoreData,id);
+        deleteById(this.assessmentScoreData, id);
     }
 
     @StoreParams("assessmentScore")
