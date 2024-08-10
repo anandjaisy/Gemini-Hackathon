@@ -1,4 +1,5 @@
 <div class="mx-20 my-10">
+    @if(studentAssessments.length > 0) {
     <fal-card>
         <ul role="list" class="divide-y divide-gray-200" style="margin-right: 3%;">
             @for(studentAssessment of studentAssessments; track studentAssessment){
@@ -16,11 +17,15 @@
                     </div>
                 </div>
                 <div class="flex justify-start gap-2 shrink-0 items-center">
-                    <button mat-stroked-button>Evaluate with AI</button>
+                    <button mat-stroked-button
+                        (click)="evaluateWithAIClick(studentAssessment?.question?.answer, studentAssessment?.question?.studentId)">Evaluate
+                        with AI</button>
+                    <!-- @if(showResult){ -->
                     <a [routerLink]="['../score']"
                         [queryParams]="{ questionId: studentAssessment?.question?.id, studentId: studentAssessment?.user?.id}"
                         mat-stroked-button>View
                         score</a>
+                    <!-- } -->
                 </div>
             </li>
             @if(studentAssessments.length > 1){
@@ -28,5 +33,9 @@
             }
             }
         </ul>
-    </fal-card>
+    </fal-card>}
+    @else {
+    <app-no-content />
+    }
+
 </div>

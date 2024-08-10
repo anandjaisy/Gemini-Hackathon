@@ -6,7 +6,6 @@ import dev.langchain4j.model.input.Prompt;
 import dev.langchain4j.model.input.PromptTemplate;
 import dev.langchain4j.model.vertexai.VertexAiGeminiChatModel;
 import dev.langchain4j.service.AiServices;
-import fete.bird.WeatherForecastService;
 import fete.bird.common.ConfigResource;
 import jakarta.inject.Singleton;
 
@@ -20,7 +19,7 @@ public record ScoreService(ConfigResource configResource) implements IScoreServi
         ChatLanguageModel model = VertexAiGeminiChatModel.builder()
                 .project(configResource.name())
                 .location(configResource.location())
-//                .responseMimeType("application/json")
+                .responseMimeType("application/json")
                 .modelName(configResource.model())
                 .maxRetries(1)
 //                .logRequests(true)
@@ -38,9 +37,10 @@ public record ScoreService(ConfigResource configResource) implements IScoreServi
                 C (30-50%): The student's answer demonstrates a basic understanding of the topic, but lacks depth and may contain significant inaccuracies or omissions in conveying the context and meaning.
                 D (Below 30%): The student's answer shows limited understanding of the topic and fails to adequately address the context and meaning of the base answer.
                 
+                If the student answer is 100% matched with the base answer, please don't mark it as copied. It is a correct answer. You should grade that as A+
+                
                 Reference Information:
                 BASE QUESTION: {{baseQuestion}}
-                
                 BASE ANSWER: {{baseAnswer}}
                 """
         );
@@ -51,16 +51,11 @@ public record ScoreService(ConfigResource configResource) implements IScoreServi
 
         Prompt prompt = promptTemplate.apply(variables);
 
-        WeatherForecastService weatherForecastService = new WeatherForecastService();
         IScoringAnalyzer analyzer = AiServices.builder(IScoringAnalyzer.class)
                 .chatLanguageModel(model)
                 .systemMessageProvider(chatMemoryId -> prompt.text())
-                .tools(weatherForecastService)
                 .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
                 .build();
-
-        var scoreResponse = analyzer.score(request.answer());
-
-        return new ScoreResponse("","","");
+        return analyzer.score(request.answer());
     }
 }

@@ -19,6 +19,8 @@ import { Role } from '../../../../common/utils';
 import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { StudentAssessmentDto } from '../../../student-assessment/student-assessment.dto';
 import { StudentAssessmentService } from '../../../student-assessment/student-assessment.service';
+import { Store } from '@ngrx/store';
+import { StudentAssessmentActions } from '../../../student-assessment/store/student-assessment.actions';
 
 @Component({
   selector: 'app-question-details',
@@ -63,7 +65,8 @@ export class QuestionDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private authorizationService: AuthorizationService,
     private studentAssessmentService: StudentAssessmentService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private store: Store
   ) {
     this.form = new FormGroup({});
   }
@@ -78,6 +81,14 @@ export class QuestionDetailsComponent implements OnInit {
       this.studentAnswer.value = question.studentAnswer;
       this.studentAnswer.disabled = question.isSubmittedByStudent;
       this.cdr.detectChanges();
+      this.store.dispatch(
+        StudentAssessmentActions.updateBaseQuestionAnswer({
+          baseAnswer: question.answer,
+          baseQuestion: question.question,
+          questionId: this.questionId as string,
+          assessmentId: this.assessmentId as string,
+        })
+      );
     });
   }
 

@@ -10,6 +10,7 @@ import { QuestionCriteria } from './questionCriteria';
 })
 export class StudentAssessmentService implements AHttpOperation {
   studentAssessmentUrl: string = `${environment.baseUrl}/assessment/student`;
+  studentAssessmentScoreUrl: string = `${environment.baseUrl}/scoring`;
   constructor(private httpClient: HttpClient) {}
   public find(criteria: any): Observable<any> {
     let params = new HttpParams();
@@ -34,5 +35,11 @@ export class StudentAssessmentService implements AHttpOperation {
   }
   public delete(id: string): Observable<any> {
     throw new Error('Method not implemented.');
+  }
+
+  public postScore<StudentAssessmentDto>(
+    model: StudentAssessmentDto
+  ): Observable<any> {
+    return this.httpClient.post(this.studentAssessmentScoreUrl, model);
   }
 }

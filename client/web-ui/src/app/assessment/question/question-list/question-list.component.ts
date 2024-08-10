@@ -19,6 +19,9 @@ import { combineLatest } from 'rxjs';
 import { QuestionDto } from '../QuestionDto';
 import { CommonModule } from '@angular/common';
 import { AuthorizationService } from '../../../auth-callback/authorization.service';
+import { NoContentComponent } from '../../../common/no-content/no-content.component';
+import { Store } from '@ngrx/store';
+import { StudentAssessmentActions } from '../../student-assessment/store/student-assessment.actions';
 
 @Component({
   selector: 'app-question-list',
@@ -32,6 +35,7 @@ import { AuthorizationService } from '../../../auth-callback/authorization.servi
     RouterModule,
     ReactiveFormsModule,
     CommonModule,
+    NoContentComponent,
   ],
   templateUrl: './question-list.component.html',
   styleUrl: './question-list.component.scss',
@@ -54,6 +58,7 @@ export class QuestionListComponent {
     private questionService: QuestionService,
     private route: ActivatedRoute,
     private authorizationService: AuthorizationService,
+    private store: Store,
     private cdr: ChangeDetectorRef
   ) {
     this.form = new FormGroup({});
@@ -93,6 +98,12 @@ export class QuestionListComponent {
         (x) => x.id == this.id
       )?.course.name;
       this.cdr.detectChanges();
+      const assessmentName = assessments.find((x: any) => x.id == this.id).name;
+      this.store.dispatch(
+        StudentAssessmentActions.updateAssessmentName({
+          assessmentName: assessmentName,
+        })
+      );
     });
   }
 }

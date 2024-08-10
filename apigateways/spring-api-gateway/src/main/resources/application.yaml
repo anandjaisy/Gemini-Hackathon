@@ -85,6 +85,11 @@ spring:
           predicates:
             - Path=/assessment/**, /question/**
             - Method=POST,PUT,PATCH,DELETE,OPTIONS
+        - id: ai-service
+          uri:
+            ${SCORE_AI_SERVICE_URL:http://localhost:8084}
+          predicates:
+            - Path=/scoring/**, /swagger/**
 #logging:
 #  level:
 #    org.springframework.cloud.gateway: DEBUG

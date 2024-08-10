@@ -9,6 +9,7 @@ export interface QuestionDto {
   createdDate: string;
   isSubmittedByStudent: boolean;
   isMarkedByTeacher: boolean;
+  studentId: string;
 }
 
 export interface UserDto {
