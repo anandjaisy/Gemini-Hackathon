@@ -1,69 +1,54 @@
-## Micronaut 4.5.1 Documentation
+### Prerequisite
+- Docker container
+- Java 21
+- Node.js
+- Angular cli
+- gcloud
 
-- [User Guide](https://docs.micronaut.io/4.5.1/guide/index.html)
-- [API Reference](https://docs.micronaut.io/4.5.1/api/index.html)
-- [Configuration Reference](https://docs.micronaut.io/4.5.1/guide/configurationreference.html)
-- [Micronaut Guides](https://guides.micronaut.io/index.html)
----
+### Architecture
+![screenshot](architecture.png)
 
-# Micronaut and Google Cloud Function
+### Authentication
+KeyCloak is used for authentication. 
+In the `service/authentication/falcon-keycloak` directory run the docker compose file.
 
-## Running the function locally
+``docker-compose -f keycloak-postgres-podman.yml up``
 
-```cmd
-./gradlew runFunction
-```
+In the keycloak a `REALM` need to setup to run the angular application. check the `environment.ts` file for configuration.
 
-And visit http://localhost:8080/course
-## Deploying the function
+This should run postgres and keycloak instance.
 
-First build the function with:
+### Angular front-end
+Run the angular application `web-ui` from the client directory using the below command
 
-```bash
-$ ./gradlew shadowJar
-```
+```ng serve -o```
 
-Then `cd` into the `build/libs` directory (deployment has to be done from the location where the JAR lives):
+### Back end 
 
-```bash
-$ cd build/libs
-```
-
-Now run:
-
-```bash
-$ gcloud functions deploy course --entry-point io.micronaut.gcp.function.http.HttpFunction --runtime java17 --trigger-http
-```
-
-Choose unauthenticated access if you don't need auth.
-
-To obtain the trigger URL do the following:
-
-```bash
-$ YOUR_HTTP_TRIGGER_URL=$(gcloud functions describe course --format='value(httpsTrigger.url)')
-```
-
-You can then use this variable to test the function invocation:
-
-```bash
-$ curl -i $YOUR_HTTP_TRIGGER_URL/course
-```
-
-- [Shadow Gradle Plugin](https://plugins.gradle.org/plugin/com.github.johnrengelman.shadow)
-- [Micronaut Gradle Plugin documentation](https://micronaut-projects.github.io/micronaut-gradle-plugin/latest/)
-- [GraalVM Gradle Plugin documentation](https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html)
-## Feature google-cloud-function-http documentation
-
-- [Micronaut Google Cloud Function documentation](https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#httpFunctions)
+Backend application are combination of below framework
+- Micronaut
+- Spring cloud gateway
 
 
-## Feature google-cloud-function documentation
+#### Assessment 
+This microservice is a micronaut application, used for assessment CRUD.
 
-- [Micronaut Google Cloud Function documentation](https://micronaut-projects.github.io/micronaut-gcp/latest/guide/index.html#simpleFunctions)
+#### Course
+This microservice is a micronaut application, used for course CRUD.
 
+#### bff
+This microservice is a micronaut application, used to modify the data for the front-end.
 
-## Feature micronaut-aot documentation
+#### Score-ai
+This microservice is a micronaut application + langchain4J, used to communicate with Gemini model and perform the action on the data. A gcloud vertexAi configuration is in the application.properties file
 
-- [Micronaut AOT documentation](https://micronaut-projects.github.io/micronaut-aot/latest/guide/)
-
+### Run the app
+#### To run the application make sure below things are aligned
+ - REALM should be configure in KeyCloak instance
+ - Angular app should be running
+ - Run all the microservices
+ - Setup the Gcloud account and substitute the project_name, model_name and other
+ - Make sure gcloud authentication is working fine
+ - In the Gcloud enable all the apis and roles for the services
+ 
 
