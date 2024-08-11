@@ -62,7 +62,7 @@ public record ScoreService(ConfigResource configResource,
                 .systemMessageProvider(chatMemoryId -> prompt.text())
                 .chatMemory(MessageWindowChatMemory.withMaxMessages(10))
                 .build();
-        var aiResponse = analyzer.score(request.answer());
+        ScoreResponse aiResponse = analyzer.score(request.answer());
         iRepository.create(new AssessmentScoreRequest(UUID.fromString(request.studentId()), UUID.fromString(request.questionId()), request.answer(), aiResponse.suggestion(), aiResponse.percentageMatched(), aiResponse.grade()));
         return aiResponse;
     }

@@ -90,7 +90,7 @@ export class QuestionListComponent {
   private loadAssessmentQuestion(): void {
     combineLatest([
       this.assessmentService.find(),
-      this.questionService.find(),
+      this.questionService.find(this.id),
     ]).subscribe(([assessments, questions]) => {
       this.select.options = transformToKeyValuePair(assessments);
       this.questionList = questions;

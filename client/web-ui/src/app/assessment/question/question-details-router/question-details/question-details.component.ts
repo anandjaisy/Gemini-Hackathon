@@ -21,6 +21,9 @@ import { StudentAssessmentDto } from '../../../student-assessment/student-assess
 import { StudentAssessmentService } from '../../../student-assessment/student-assessment.service';
 import { Store } from '@ngrx/store';
 import { StudentAssessmentActions } from '../../../student-assessment/store/student-assessment.actions';
+import { KeycloakUser } from '../../../../auth-callback/keycloakuser.dto';
+import { StudentScoreService } from '../../../student-assessment/student-score/student-score.service';
+import { AssessmentScoreCriteria } from '../../../student-assessment/student-score/assessment-score-criteria';
 
 @Component({
   selector: 'app-question-details',
@@ -57,6 +60,8 @@ export class QuestionDetailsComponent implements OnInit {
     ],
   });
   form: FormGroup;
+  private keycloakUser: KeycloakUser = {} as KeycloakUser;
+  marked: string = '';
   constructor(
     private questionService: QuestionService,
     private activatedRoute: ActivatedRoute,
@@ -66,11 +71,13 @@ export class QuestionDetailsComponent implements OnInit {
     private authorizationService: AuthorizationService,
     private studentAssessmentService: StudentAssessmentService,
     private cdr: ChangeDetectorRef,
-    private store: Store
+    private store: Store,
+    private studentScoreService: StudentScoreService
   ) {
     this.form = new FormGroup({});
   }
   ngOnInit(): void {
+    this.keycloakUser = this.authorizationService.getUserDetails();
     this.questionId = this.route.snapshot.params['id'];
     this.assessmentId =
       this.route.parent?.parent?.parent?.snapshot.params['id'];
@@ -135,12 +142,23 @@ export class QuestionDetailsComponent implements OnInit {
     this.activatedRoute.params.subscribe((params) => {
       this.id = params['id'];
       this.question$ = this.questionService.get(this.id);
+      this.loadGrade();
     });
+  }
+
+  private loadGrade(): void {
+    const creteria = {
+      studentId: this.keycloakUser.id,
+      questionId: this.questionId,
+    } as AssessmentScoreCriteria;
+    this.studentScoreService
+      .find(creteria)
+      .subscribe((item) => (this.marked = item[0].grade));
   }
 
   onSubmit(form: FormGroup) {
     const studentAssessment = {
-      studentId: this.authorizationService.getUserDetails().id,
+      studentId: this.keycloakUser.id,
       questionId: this.questionId,
       answer: form.value.studentAnswer,
     } as StudentAssessmentDto;
