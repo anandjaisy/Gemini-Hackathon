@@ -1,0 +1,41 @@
+version: '3'
+volumes:
+  postgres_data:
+      driver: local
+services:
+  postgres:
+      image: ankane/pgvector
+      volumes:
+        - postgres_data:/var/lib/postgresql/data
+      ports:
+      - 5432:5432
+      container_name: postgres_vector
+      environment:
+        #TODO Secure the user name and password     
+        POSTGRES_DB: keycloak
+        POSTGRES_USER: keycloak
+        POSTGRES_PASSWORD: password
+  keycloak:
+      image: quay.io/keycloak/keycloak:latest
+      container_name: keycloak
+      environment:
+        DB_VENDOR: POSTGRES
+        DB_ADDR: postgres
+        DB_DATABASE: keycloak
+        #TODO Secure the user name
+        DB_USER: keycloak
+        DB_SCHEMA: public
+        #TODO Secure the password      
+        DB_PASSWORD: password
+        KEYCLOAK_ADMIN: admin
+        KEYCLOAK_ADMIN_PASSWORD: Pa55w0rd
+        # Enable debug logging
+        KC_LOG_LEVEL: DEBUG
+        # Uncomment the line below if you want to specify JDBC parameters. The parameter below is just an example, and it shouldn't be used in production without knowledge. It is highly recommended that you read the PostgreSQL JDBC driver documentation in order to use it.
+        #JDBC_PARAMS: "ssl=true"
+      ports:
+        - 5001:8080
+      depends_on:
+        - postgres
+      command:
+        - start-dev
