@@ -28,8 +28,8 @@ public record ScoreService(ConfigResource configResource,
                 .responseMimeType("application/json")
                 .modelName(configResource.model())
                 .maxRetries(1)
-//                .logRequests(true)
-//                .logResponses(true)
+                .logRequests(true)
+                .logResponses(true)
                 .build();
         // Define the prompt template
         PromptTemplate promptTemplate = PromptTemplate.from("""
